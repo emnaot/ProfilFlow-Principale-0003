@@ -136,7 +136,6 @@ const Profil = ({ collaboratorId }) => {
     if (typeof value === 'object' && value !== null) {
       return (
         <FieldContainer key={key}>
-          <FieldTitle variant="h6">{key}</FieldTitle>
           {Object.keys(value).map(subKey => (
             <div key={subKey} style={{ marginLeft: '20px' }}>
               <FieldTitle variant="subtitle2">{subKey}:</FieldTitle>
