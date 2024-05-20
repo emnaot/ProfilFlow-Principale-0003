@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Typography, Grid, Container, Card, CardContent, CardMedia, CardActionArea, Button, Dialog, DialogContent, DialogTitle } from "@mui/material";
+import React, { useState, useEffect } from "react";
+import { Typography, Grid, Container, Card, CardContent, CardMedia, CardActionArea, Button, Dialog, DialogContent, DialogTitle, DialogActions } from "@mui/material";
 import CVTemplate1 from "./templates/template1";
 import CVTemplate2 from "./templates/template2";
 import CVTemplate3 from "./templates/template3";
@@ -11,7 +11,7 @@ const templateImages = {
   template3: "/images/3.png",
 };
 
-const Modele = () => {
+const Modele = ({ selectedCV }) => {
   const [open, setOpen] = useState(false);
   const [selectedTemplate, setSelectedTemplate] = useState(null);
 
@@ -25,10 +25,12 @@ const Modele = () => {
     setSelectedTemplate(null);
   };
 
-  const handleGenerate = (template) => {
-    console.log(`Générer le modèle: ${template}`);
-    // Ajoutez ici la logique pour générer le modèle
-  };
+  useEffect(() => {
+    if (selectedCV) {
+      // Logique pour utiliser les données de selectedCV si nécessaire
+      console.log('Données du CV reçu:', selectedCV);
+    }
+  }, [selectedCV]);
 
   return (
     <Container maxWidth="xl">
@@ -55,7 +57,7 @@ const Modele = () => {
                 </Typography>
               </CardContent>
             </CardActionArea>
-            <Button onClick={() => handleGenerate("template1")} variant="contained" color="primary">
+            <Button onClick={() => handleOpen("template1")} variant="contained" color="primary">
               Générer
             </Button>
           </Card>
@@ -76,7 +78,7 @@ const Modele = () => {
                 </Typography>
               </CardContent>
             </CardActionArea>
-            <Button onClick={() => handleGenerate("template2")} variant="contained" color="primary">
+            <Button onClick={() => handleOpen("template2")} variant="contained" color="primary">
               Générer
             </Button>
           </Card>
@@ -97,7 +99,7 @@ const Modele = () => {
                 </Typography>
               </CardContent>
             </CardActionArea>
-            <Button onClick={() => handleGenerate("template3")} variant="contained" color="primary">
+            <Button onClick={() => handleOpen("template3")} variant="contained" color="primary">
               Générer
             </Button>
           </Card>
@@ -107,10 +109,15 @@ const Modele = () => {
       <Dialog open={open} onClose={handleClose} maxWidth="md" fullWidth>
         <DialogTitle>Modèle</DialogTitle>
         <DialogContent>
-          {selectedTemplate === "template1" && <CVTemplate1 />}
-          {selectedTemplate === "template2" && <CVTemplate2 />}
-          {selectedTemplate === "template3" && <CVTemplate3 />}
+          {selectedTemplate === "template1" && <CVTemplate1 cvData={selectedCV[0]} />}
+          {selectedTemplate === "template2" && <CVTemplate2 cvData={selectedCV[0]} />}
+          {selectedTemplate === "template3" && <CVTemplate3 cvData={selectedCV[0]} />}
         </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose} color="primary">
+            Fermer
+          </Button>
+        </DialogActions>
       </Dialog>
     </Container>
   );

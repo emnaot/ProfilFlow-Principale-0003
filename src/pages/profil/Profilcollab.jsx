@@ -50,6 +50,7 @@ const Profil = ({ collaboratorId }) => {
   const [editCV, setEditCV] = useState({});
   const [loading, setLoading] = useState(false);
   const [openPopup, setOpenPopup] = useState(false);
+  const [selectedCV, setSelectedCV] = useState(null);
 
   useEffect(() => {
     setLoading(true);
@@ -125,6 +126,8 @@ const Profil = ({ collaboratorId }) => {
   };
 
   const handleGenerateClick = () => {
+    setSelectedCV(cv); // Ajoutez ceci pour stocker les données de CV sélectionnées
+    console.log('CV sélectionné:', cv); // Ajoutez ce log pour vérifier les données
     setOpenPopup(true);
   };
 
@@ -243,7 +246,7 @@ const Profil = ({ collaboratorId }) => {
       <Dialog open={openPopup} onClose={handleClosePopup} fullScreen>
         <DialogTitle>Contenu du Modèle</DialogTitle>
         <DialogContent>
-          <Modele />
+          <Modele selectedCV={selectedCV} /> {/* Passez les données de CV au composant Modele */}
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClosePopup} color="primary">

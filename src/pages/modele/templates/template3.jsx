@@ -1,190 +1,66 @@
 import React from 'react';
-import { Container, Grid, Paper, Avatar, Typography, List, ListItem, ListItemIcon, ListItemText, Box, Divider } from '@mui/material';
-import PhoneIcon from '@mui/icons-material/Phone';
-import EmailIcon from '@mui/icons-material/Email';
-import LocationOnIcon from '@mui/icons-material/LocationOn';
-import StarIcon from '@mui/icons-material/Star';
+import { Container, Paper, Typography, Box } from '@mui/material';
 
-const CVTemplate3 = () => {
+const CVTemplate3 = ({ cvData }) => {
+  if (!cvData) return <Typography>Chargement des données du CV...</Typography>;
+
   return (
     <Container maxWidth="md">
-      <Paper elevation={3} style={{ padding: '20px', backgroundColor: '#F8EDEB' }}>
-        <Grid container spacing={3}>
-          {/* Header */}
-          <Grid item xs={12} style={{ textAlign: 'center', color: '#E07A5F' }}>
-            <Typography variant="h3" component="h1">Prénom Nom</Typography>
-            <Typography variant="h5" component="h2" gutterBottom>Titre du CV</Typography>
-          </Grid>
+      <Paper elevation={3} style={{ padding: '20px' }}>
+        <Box mb={4}>
+          <Typography variant="h5" gutterBottom>Nom et Prénom</Typography>
+          <Typography variant="body1">{cvData["Nom et Prénom"]}</Typography>
+        </Box>
 
-          {/* Informations personnelles */}
-          <Grid item xs={12} sm={4} style={{ backgroundColor: '#B5838D', color: 'white', padding: '20px' }}>
-            <Box display="flex" justifyContent="center" mb={2}>
-              <Avatar alt="Prénom Nom" src="/static/images/avatar/1.jpg" style={{ width: '100px', height: '100px' }} />
-            </Box>
-            <Box mt={4}>
-              <Typography variant="h6" gutterBottom>Informations personnelles</Typography>
-              <List>
-                <ListItem>
-                  <ListItemIcon>
-                    <PhoneIcon style={{ color: 'white' }} />
-                  </ListItemIcon>
-                  <ListItemText primary="" />
-                </ListItem>
-                <ListItem>
-                  <ListItemIcon>
-                    <EmailIcon style={{ color: 'white' }} />
-                  </ListItemIcon>
-                  <ListItemText primary="" />
-                </ListItem>
-                <ListItem>
-                  <ListItemIcon>
-                    <LocationOnIcon style={{ color: 'white' }} />
-                  </ListItemIcon>
-                  <ListItemText primary="" />
-                </ListItem>
-              </List>
-            </Box>
+        <Box mb={4}>
+          <Typography variant="h5" gutterBottom>Titre du cv</Typography>
+          <Typography variant="body1">{cvData["Titre du cv"]}</Typography>
+        </Box>
 
-            {/* Compétences */}
-            <Box mt={4}>
-              <Typography variant="h6" gutterBottom>Compétences</Typography>
-              <List>
-                <ListItem>
-                  <ListItemText primary="" />
-                </ListItem>
-                <ListItem>
-                  <ListItemText primary="" />
-                </ListItem>
-                <ListItem>
-                  <ListItemText primary="" />
-                </ListItem>
-              </List>
-            </Box>
+        <Box mb={4}>
+          <Typography variant="h5" gutterBottom>Informations Personnelles</Typography>
+          <Typography variant="body1">{cvData["Informations Personnelles"]}</Typography>
+        </Box>
 
-            {/* Langues */}
-            <Box mt={4}>
-              <Typography variant="h6" gutterBottom>Langues</Typography>
-              <List>
-                <ListItem>
-                  <ListItemText primary="" />
-                </ListItem>
-                <ListItem>
-                  <ListItemText primary="" />
-                </ListItem>
-                <ListItem>
-                  <ListItemText primary="" />
-                </ListItem>
-              </List>
-            </Box>
+        <Box mb={4}>
+          <Typography variant="h5" gutterBottom>Education</Typography>
+          <Typography variant="body1">{cvData["Education"]}</Typography>
+        </Box>
 
-            {/* Certifications */}
-            <Box mt={4}>
-              <Typography variant="h6" gutterBottom>Certifications</Typography>
-              <List>
-                <ListItem>
-                  <ListItemText primary="" />
-                </ListItem>
-                <ListItem>
-                  <ListItemText primary="" />
-                </ListItem>
-              </List>
-            </Box>
+        <Box mb={4}>
+          <Typography variant="h5" gutterBottom>Compétences</Typography>
+          <Typography variant="body1">{cvData["Compétences"]}</Typography>
+        </Box>
 
-            {/* Vie Associative */}
-            <Box mt={4}>
-              <Typography variant="h6" gutterBottom>Vie Associative</Typography>
-              <List>
-                <ListItem>
-                  <ListItemText primary="" />
-                </ListItem>
-                <ListItem>
-                  <ListItemText primary="" />
-                </ListItem>
-              </List>
-            </Box>
+        <Box mb={4}>
+          <Typography variant="h5" gutterBottom>Projet Académique</Typography>
+          <Typography variant="body1">{cvData["Projet Académique"]}</Typography>
+        </Box>
 
-            {/* Centre d'intérêt */}
-            <Box mt={4}>
-              <Typography variant="h6" gutterBottom>Centre d'intérêt</Typography>
-              <List>
-                <ListItem>
-                  <ListItemText primary="" />
-                </ListItem>
-                <ListItem>
-                  <ListItemText primary="" />
-                </ListItem>
-                <ListItem>
-                  <ListItemText primary="" />
-                </ListItem>
-              </List>
-            </Box>
-          </Grid>
+        <Box mb={4}>
+          <Typography variant="h5" gutterBottom>Experience Professionnelle</Typography>
+          <Typography variant="body1">{cvData["Experience Professionnelle"]}</Typography>
+        </Box>
 
-          {/* Right Side */}
-          <Grid item xs={12} sm={8}>
-            {/* Education */}
-            <Box mb={4}>
-              <Typography variant="h6" gutterBottom style={{ color: '#E07A5F' }}>Education</Typography>
-              <Box mb={2}>
-                <Typography variant="subtitle1"></Typography>
-                <Typography variant="subtitle2"></Typography>
-                <Typography variant="body2"></Typography>
-              </Box>
-              <Box mb={2}>
-                <Typography variant="subtitle1"></Typography>
-                <Typography variant="subtitle2"></Typography>
-                <Typography variant="body2"></Typography>
-              </Box>
-            </Box>
+        <Box mb={4}>
+          <Typography variant="h5" gutterBottom>Langues</Typography>
+          <Typography variant="body1">{cvData["Langues"]}</Typography>
+        </Box>
 
-            {/* Projet académique */}
-            <Box mb={4}>
-              <Typography variant="h6" gutterBottom style={{ color: '#E07A5F' }}>Projet académique</Typography>
-              <Box mb={2}>
-                <Typography variant="subtitle1"></Typography>
-                <Typography variant="body2"></Typography>
-              </Box>
-            </Box>
+        <Box mb={4}>
+          <Typography variant="h5" gutterBottom>Certifications</Typography>
+          <Typography variant="body1">{cvData["Certifications"]}</Typography>
+        </Box>
 
-            {/* Expérience Professionnelle */}
-            <Box mb={4}>
-              <Typography variant="h6" gutterBottom style={{ color: '#E07A5F' }}>Expérience Professionnelle</Typography>
-              <Box mb={2}>
-                <Typography variant="subtitle1"></Typography>
-                <Typography variant="subtitle2"></Typography>
-                <Typography variant="body2">
-                  <ul>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                  </ul>
-                </Typography>
-              </Box>
-              <Box mb={2}>
-                <Typography variant="subtitle1"></Typography>
-                <Typography variant="subtitle2"></Typography>
-                <Typography variant="body2">
-                  <ul>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                  </ul>
-                </Typography>
-              </Box>
-              <Box mb={2}>
-                <Typography variant="subtitle1"></Typography>
-                <Typography variant="subtitle2"></Typography>
-                <Typography variant="body2">
-                  <ul>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                  </ul>
-                </Typography>
-              </Box>
-            </Box>
-          </Grid>
-        </Grid>
+        <Box mb={4}>
+          <Typography variant="h5" gutterBottom>Vie Associative</Typography>
+          <Typography variant="body1">{cvData["Vie Associative"]}</Typography>
+        </Box>
+
+        <Box mb={4}>
+          <Typography variant="h5" gutterBottom>Centre d'intérêt</Typography>
+          <Typography variant="body1">{cvData["Centre d'interet"]}</Typography>
+        </Box>
       </Paper>
     </Container>
   );
