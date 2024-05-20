@@ -233,7 +233,7 @@ const Profil = ({ collaboratorId }) => {
               </Grid>
               <Grid item xs={6}>
                 <Button variant="contained" color="info" onClick={handleGenerateClick}>
-                  Générer
+                  Choisir modèle
                 </Button>
               </Grid>
             </Grid>

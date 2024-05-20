@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Typography, Grid, Container, Card, CardContent, CardMedia, CardActionArea, Dialog, DialogContent, DialogTitle } from "@mui/material";
+import { Typography, Grid, Container, Card, CardContent, CardMedia, CardActionArea, Button, Dialog, DialogContent, DialogTitle } from "@mui/material";
 import CVTemplate1 from "./templates/template1";
 import CVTemplate2 from "./templates/template2";
 import CVTemplate3 from "./templates/template3";
@@ -25,19 +25,24 @@ const Modele = () => {
     setSelectedTemplate(null);
   };
 
+  const handleGenerate = (template) => {
+    console.log(`Générer le modèle: ${template}`);
+    // Ajoutez ici la logique pour générer le modèle
+  };
+
   return (
     <Container maxWidth="xl">
       <Typography variant="h3" gutterBottom>
         Page des Modèles
       </Typography>
       <Typography variant="body1">
-        Bienvenue sur la page des Modèles de votre applicationnn.
+        Bienvenue sur la page des Modèles de votre application.
       </Typography>
 
       <Grid container spacing={3} style={{ marginTop: '20px' }}>
         <Grid item xs={12} sm={6} md={4}>
-          <Card onClick={() => handleOpen("template1")}>
-            <CardActionArea>
+          <Card>
+            <CardActionArea onClick={() => handleOpen("template1")}>
               <CardMedia
                 component="img"
                 height="140"
@@ -50,12 +55,15 @@ const Modele = () => {
                 </Typography>
               </CardContent>
             </CardActionArea>
+            <Button onClick={() => handleGenerate("template1")} variant="contained" color="primary">
+              Générer
+            </Button>
           </Card>
         </Grid>
 
         <Grid item xs={12} sm={6} md={4}>
-          <Card onClick={() => handleOpen("template2")}>
-            <CardActionArea>
+          <Card>
+            <CardActionArea onClick={() => handleOpen("template2")}>
               <CardMedia
                 component="img"
                 height="140"
@@ -68,11 +76,15 @@ const Modele = () => {
                 </Typography>
               </CardContent>
             </CardActionArea>
+            <Button onClick={() => handleGenerate("template2")} variant="contained" color="primary">
+              Générer
+            </Button>
           </Card>
         </Grid>
+
         <Grid item xs={12} sm={6} md={4}>
-          <Card onClick={() => handleOpen("template3")}>
-            <CardActionArea>
+          <Card>
+            <CardActionArea onClick={() => handleOpen("template3")}>
               <CardMedia
                 component="img"
                 height="140"
@@ -85,6 +97,9 @@ const Modele = () => {
                 </Typography>
               </CardContent>
             </CardActionArea>
+            <Button onClick={() => handleGenerate("template3")} variant="contained" color="primary">
+              Générer
+            </Button>
           </Card>
         </Grid>
       </Grid>
