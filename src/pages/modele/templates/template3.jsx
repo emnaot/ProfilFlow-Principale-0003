@@ -3,8 +3,7 @@ import { Container, Grid, Paper, Avatar, Typography, List, ListItem, ListItemIco
 import PhoneIcon from '@mui/icons-material/Phone';
 import EmailIcon from '@mui/icons-material/Email';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
-import SchoolIcon from '@mui/icons-material/School';
-import WorkIcon from '@mui/icons-material/Work';
+import StarIcon from '@mui/icons-material/Star';
 
 const CVTemplate3 = () => {
   return (
@@ -29,19 +28,19 @@ const CVTemplate3 = () => {
                   <ListItemIcon>
                     <PhoneIcon style={{ color: 'white' }} />
                   </ListItemIcon>
-                  <ListItemText primary="06 06 06 06 06" />
+                  <ListItemText primary="" />
                 </ListItem>
                 <ListItem>
                   <ListItemIcon>
                     <EmailIcon style={{ color: 'white' }} />
                   </ListItemIcon>
-                  <ListItemText primary="prenom.nom@xxx.com" />
+                  <ListItemText primary="" />
                 </ListItem>
                 <ListItem>
                   <ListItemIcon>
                     <LocationOnIcon style={{ color: 'white' }} />
                   </ListItemIcon>
-                  <ListItemText primary="Ville, Pays" />
+                  <ListItemText primary="" />
                 </ListItem>
               </List>
             </Box>
@@ -51,13 +50,13 @@ const CVTemplate3 = () => {
               <Typography variant="h6" gutterBottom>Compétences</Typography>
               <List>
                 <ListItem>
-                  <ListItemText primary="Excel, Word, PowerPoint, Outlook" />
+                  <ListItemText primary="" />
                 </ListItem>
                 <ListItem>
-                  <ListItemText primary="Gestion en équipe, Management" />
+                  <ListItemText primary="" />
                 </ListItem>
                 <ListItem>
-                  <ListItemText primary="Gestion de site, SEO" />
+                  <ListItemText primary="" />
                 </ListItem>
               </List>
             </Box>
@@ -67,13 +66,13 @@ const CVTemplate3 = () => {
               <Typography variant="h6" gutterBottom>Langues</Typography>
               <List>
                 <ListItem>
-                  <ListItemText primary="Français" />
+                  <ListItemText primary="" />
                 </ListItem>
                 <ListItem>
-                  <ListItemText primary="Anglais" />
+                  <ListItemText primary="" />
                 </ListItem>
                 <ListItem>
-                  <ListItemText primary="Allemand" />
+                  <ListItemText primary="" />
                 </ListItem>
               </List>
             </Box>
@@ -83,10 +82,10 @@ const CVTemplate3 = () => {
               <Typography variant="h6" gutterBottom>Certifications</Typography>
               <List>
                 <ListItem>
-                  <ListItemText primary="Certification A" />
+                  <ListItemText primary="" />
                 </ListItem>
                 <ListItem>
-                  <ListItemText primary="Certification B" />
+                  <ListItemText primary="" />
                 </ListItem>
               </List>
             </Box>
@@ -96,10 +95,10 @@ const CVTemplate3 = () => {
               <Typography variant="h6" gutterBottom>Vie Associative</Typography>
               <List>
                 <ListItem>
-                  <ListItemText primary="Membre de l'association XYZ" />
+                  <ListItemText primary="" />
                 </ListItem>
                 <ListItem>
-                  <ListItemText primary="Bénévole à ABC" />
+                  <ListItemText primary="" />
                 </ListItem>
               </List>
             </Box>
@@ -109,13 +108,13 @@ const CVTemplate3 = () => {
               <Typography variant="h6" gutterBottom>Centre d'intérêt</Typography>
               <List>
                 <ListItem>
-                  <ListItemText primary="Lecture" />
+                  <ListItemText primary="" />
                 </ListItem>
                 <ListItem>
-                  <ListItemText primary="Voyages" />
+                  <ListItemText primary="" />
                 </ListItem>
                 <ListItem>
-                  <ListItemText primary="Sports" />
+                  <ListItemText primary="" />
                 </ListItem>
               </List>
             </Box>
@@ -127,14 +126,14 @@ const CVTemplate3 = () => {
             <Box mb={4}>
               <Typography variant="h6" gutterBottom style={{ color: '#E07A5F' }}>Education</Typography>
               <Box mb={2}>
-                <Typography variant="subtitle1">École de Mode</Typography>
-                <Typography variant="subtitle2">Sept. 2022 - Juin 2023</Typography>
-                <Typography variant="body2">EDM - Paris</Typography>
+                <Typography variant="subtitle1"></Typography>
+                <Typography variant="subtitle2"></Typography>
+                <Typography variant="body2"></Typography>
               </Box>
               <Box mb={2}>
-                <Typography variant="subtitle1">Baccalauréat STD2A</Typography>
-                <Typography variant="subtitle2">2021</Typography>
-                <Typography variant="body2">Lycée Blaise Pascal - Paris</Typography>
+                <Typography variant="subtitle1"></Typography>
+                <Typography variant="subtitle2"></Typography>
+                <Typography variant="body2"></Typography>
               </Box>
             </Box>
 
@@ -142,10 +141,8 @@ const CVTemplate3 = () => {
             <Box mb={4}>
               <Typography variant="h6" gutterBottom style={{ color: '#E07A5F' }}>Projet académique</Typography>
               <Box mb={2}>
-                <Typography variant="subtitle1">Projet de fin d'études</Typography>
-                <Typography variant="body2">
-                  Description du projet académique, objectifs atteints et compétences développées.
-                </Typography>
+                <Typography variant="subtitle1"></Typography>
+                <Typography variant="body2"></Typography>
               </Box>
             </Box>
 
@@ -153,33 +150,35 @@ const CVTemplate3 = () => {
             <Box mb={4}>
               <Typography variant="h6" gutterBottom style={{ color: '#E07A5F' }}>Expérience Professionnelle</Typography>
               <Box mb={2}>
-                <Typography variant="subtitle1">Styliste Modéliste</Typography>
-                <Typography variant="subtitle2">Poste occupé | Ville, Pays</Typography>
+                <Typography variant="subtitle1"></Typography>
+                <Typography variant="subtitle2"></Typography>
                 <Typography variant="body2">
                   <ul>
-                    <li>Création de vêtements et d'accessoires.</li>
-                    <li>Élaboration des collections de mode.</li>
-                    <li>Suivi de la fabrication et des relations avec les fournisseurs.</li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
                   </ul>
                 </Typography>
               </Box>
               <Box mb={2}>
-                <Typography variant="subtitle1">Styliste Modéliste</Typography>
-                <Typography variant="subtitle2">Poste occupé | Ville, Pays</Typography>
+                <Typography variant="subtitle1"></Typography>
+                <Typography variant="subtitle2"></Typography>
                 <Typography variant="body2">
                   <ul>
-                    <li>Création de nouvelles collections de stylisme et de vêtements.</li>
-                    <li>Élaboration des plans de collections et des plannings pour la production.</li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
                   </ul>
                 </Typography>
               </Box>
               <Box mb={2}>
-                <Typography variant="subtitle1">Styliste Modéliste</Typography>
-                <Typography variant="subtitle2">Poste occupé | Ville, Pays</Typography>
+                <Typography variant="subtitle1"></Typography>
+                <Typography variant="subtitle2"></Typography>
                 <Typography variant="body2">
                   <ul>
-                    <li>Réalisation des collections et gestion de la production.</li>
-                    <li>Développement des accessoires et suivi de la production.</li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
                   </ul>
                 </Typography>
               </Box>

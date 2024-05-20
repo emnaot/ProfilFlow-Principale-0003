@@ -25,25 +25,25 @@ const CVTemplate2 = () => {
                 <ListItemIcon>
                   <LinkedInIcon style={{ color: '#008000' }} />
                 </ListItemIcon>
-                <ListItemText primary={<Link href="https://linkedin.com/in/name" target="_blank" rel="noopener">linkedin.com/in/name</Link>} />
+                <ListItemText primary={<Link href="#" target="_blank" rel="noopener">linkedin.com/in/name</Link>} />
               </ListItem>
               <ListItem>
                 <ListItemIcon>
                   <EmailIcon style={{ color: '#008000' }} />
                 </ListItemIcon>
-                <ListItemText primary="prenom.nom@xxx.com" />
+                <ListItemText primary="" />
               </ListItem>
               <ListItem>
                 <ListItemIcon>
                   <PhoneIcon style={{ color: '#008000' }} />
                 </ListItemIcon>
-                <ListItemText primary="06 06 06 06 06" />
+                <ListItemText primary="" />
               </ListItem>
               <ListItem>
                 <ListItemIcon>
                   <LocationOnIcon style={{ color: '#008000' }} />
                 </ListItemIcon>
-                <ListItemText primary="Ville, Pays" />
+                <ListItemText primary="" />
               </ListItem>
             </List>
 
@@ -51,13 +51,13 @@ const CVTemplate2 = () => {
             <Typography variant="h6" gutterBottom style={{ color: '#008000' }}>Centre d'intérêt</Typography>
             <List>
               <ListItem>
-                <ListItemText primary="Lecture" />
+                <ListItemText primary="" />
               </ListItem>
               <ListItem>
-                <ListItemText primary="Voyages" />
+                <ListItemText primary="" />
               </ListItem>
               <ListItem>
-                <ListItemText primary="Sports" />
+                <ListItemText primary="" />
               </ListItem>
             </List>
 
@@ -65,13 +65,13 @@ const CVTemplate2 = () => {
             <Typography variant="h6" gutterBottom style={{ color: '#008000' }}>Langues</Typography>
             <List>
               <ListItem>
-                <ListItemText primary="Français" />
+                <ListItemText primary="" />
               </ListItem>
               <ListItem>
-                <ListItemText primary="Anglais" />
+                <ListItemText primary="" />
               </ListItem>
               <ListItem>
-                <ListItemText primary="Allemand" />
+                <ListItemText primary="" />
               </ListItem>
             </List>
 
@@ -82,31 +82,31 @@ const CVTemplate2 = () => {
                 <ListItemIcon>
                   <StarIcon style={{ color: '#008000' }} />
                 </ListItemIcon>
-                <ListItemText primary="Sales management" />
+                <ListItemText primary="" />
               </ListItem>
               <ListItem>
                 <ListItemIcon>
                   <StarIcon style={{ color: '#008000' }} />
                 </ListItemIcon>
-                <ListItemText primary="Business development" />
+                <ListItemText primary="" />
               </ListItem>
               <ListItem>
                 <ListItemIcon>
                   <StarIcon style={{ color: '#008000' }} />
                 </ListItemIcon>
-                <ListItemText primary="Commercial negotiating" />
+                <ListItemText primary="" />
               </ListItem>
               <ListItem>
                 <ListItemIcon>
                   <StarIcon style={{ color: '#008000' }} />
                 </ListItemIcon>
-                <ListItemText primary="Key account management" />
+                <ListItemText primary="" />
               </ListItem>
               <ListItem>
                 <ListItemIcon>
                   <StarIcon style={{ color: '#008000' }} />
                 </ListItemIcon>
-                <ListItemText primary="Leadership and team management" />
+                <ListItemText primary="" />
               </ListItem>
             </List>
 
@@ -114,10 +114,10 @@ const CVTemplate2 = () => {
             <Typography variant="h6" gutterBottom style={{ color: '#008000' }}>Certifications</Typography>
             <List>
               <ListItem>
-                <ListItemText primary="Certification A" />
+                <ListItemText primary="" />
               </ListItem>
               <ListItem>
-                <ListItemText primary="Certification B" />
+                <ListItemText primary="" />
               </ListItem>
             </List>
           </Grid>
@@ -127,35 +127,41 @@ const CVTemplate2 = () => {
             {/* Expérience Professionnelle */}
             <Typography variant="h6" gutterBottom style={{ color: '#008000' }}>Expérience Professionnelle</Typography>
             <Box mb={2}>
-              <Typography variant="subtitle1">Sales Manager, Company ABC, City, Country</Typography>
-              <Typography variant="subtitle2">Jan 2020 - Aug 2022</Typography>
+              <Typography variant="subtitle1"></Typography>
+              <Typography variant="subtitle2"></Typography>
               <Typography variant="body2">
                 <ul>
-                  <li>Boosted sales activities by 30% in the west coast region by overseeing the process and operations of closing deals.</li>
-                  <li>Maintained a 100% client satisfaction rating and generated 10% growth in annual sales revenue by working closely with sales and support teams.</li>
-                  <li>Opened five new accounts by providing prompt and consistent, quality customer service.</li>
+                  <li></li>
+                  <li></li>
+                  <li></li>
+                  <li></li>
+                  <li></li>
                 </ul>
               </Typography>
             </Box>
             <Box mb={2}>
-              <Typography variant="subtitle1">Field Sales Manager, Content Company, Inc.</Typography>
-              <Typography variant="subtitle2">Jan 2018 - Jan 2020</Typography>
+              <Typography variant="subtitle1"></Typography>
+              <Typography variant="subtitle2"></Typography>
               <Typography variant="body2">
                 <ul>
-                  <li>Increased customer loyalty by 40% within six months of managing key accounts on the east coast while serving as a coordinator within the operations team.</li>
-                  <li>Achieved a 10% growth rate in our client base by finding opportunities within key accounts for strategic partnerships.</li>
-                  <li>Boosted customer satisfaction by 33% after six months.</li>
+                  <li></li>
+                  <li></li>
+                  <li></li>
+                  <li></li>
+                  <li></li>
                 </ul>
               </Typography>
             </Box>
             <Box mb={2}>
-              <Typography variant="subtitle1">Sales Intern, Technology Company, Inc.</Typography>
-              <Typography variant="subtitle2">Jan 2020 - Aug 2022</Typography>
+              <Typography variant="subtitle1"></Typography>
+              <Typography variant="subtitle2"></Typography>
               <Typography variant="body2">
                 <ul>
-                  <li>Boosted sales activities by 30% in the west coast region by overseeing the process and operations of closing deals.</li>
-                  <li>Maintained a 100% client satisfaction rating and generated 10% growth in annual sales revenue by working closely with sales and support teams.</li>
-                  <li>Opened five new accounts by providing prompt and consistent, quality customer service.</li>
+                  <li></li>
+                  <li></li>
+                  <li></li>
+                  <li></li>
+                  <li></li>
                 </ul>
               </Typography>
             </Box>
@@ -163,16 +169,16 @@ const CVTemplate2 = () => {
             {/* Education */}
             <Typography variant="h6" gutterBottom style={{ color: '#008000' }}>Education</Typography>
             <Box mb={2}>
-              <Typography variant="subtitle1">Bachelor of Business Administration, XYZ University, City, Country</Typography>
-              <Typography variant="subtitle2">Year of graduation</Typography>
+              <Typography variant="subtitle1"></Typography>
+              <Typography variant="subtitle2"></Typography>
             </Box>
 
             {/* Projet Académique */}
             <Typography variant="h6" gutterBottom style={{ color: '#008000' }}>Projet Académique</Typography>
             <Box mb={2}>
-              <Typography variant="subtitle1">Projet de fin d'études</Typography>
+              <Typography variant="subtitle1"></Typography>
               <Typography variant="body2">
-                Description du projet académique, objectifs atteints et compétences développées.
+                {/* Description du projet académique */}
               </Typography>
             </Box>
 
@@ -180,10 +186,10 @@ const CVTemplate2 = () => {
             <Typography variant="h6" gutterBottom style={{ color: '#008000' }}>Vie Associative</Typography>
             <List>
               <ListItem>
-                <ListItemText primary="Membre de l'association XYZ" />
+                <ListItemText primary="" />
               </ListItem>
               <ListItem>
-                <ListItemText primary="Bénévole à ABC" />
+                <ListItemText primary="" />
               </ListItem>
             </List>
           </Grid>

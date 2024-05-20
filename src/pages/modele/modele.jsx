@@ -6,9 +6,9 @@ import CVTemplate3 from "./templates/template3";
 
 // Placeholder images for the templates
 const templateImages = {
-  template1: "path/to/template1-image.jpg",
-  template2: "path/to/template2-image.jpg",
-  template3: "path/to/template3-image.jpg",
+  template1: "/images/1.png",
+  template2: "/images/2.png",
+  template3: "/images/3.png",
 };
 
 const Modele = () => {
