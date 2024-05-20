@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { Container, Typography, Paper, Grid, Button, CircularProgress, TextField } from "@mui/material";
+import { Container, Typography, Paper, Grid, Button, CircularProgress, TextField, Dialog, DialogTitle, DialogContent, DialogActions } from "@mui/material";
 import { styled } from "@mui/material/styles";
+import Modele from '../modele/modele'; // Assurez-vous d'importer correctement le composant Modele
 
 const StyledPaper = styled(Paper)(({ theme }) => ({
   padding: theme.spacing(6),
@@ -20,13 +21,13 @@ const SectionTitle = styled(Typography)(({ theme }) => ({
   alignItems: "center",
   marginBottom: theme.spacing(2),
   color: theme.palette.mode === "dark" ? "#bb86fc" : "#0d3d73",
-  fontSize: "1.5rem", // Agrandir la taille de la police des titres de section
+  fontSize: "1.5rem",
 }));
 
 const FieldContainer = styled('div')(({ theme }) => ({
-  marginBottom: theme.spacing(4), // Augmenter l'espacement entre les sections
-  padding: theme.spacing(4), // Augmenter le padding des sections
-  background: theme.palette.mode === "dark" ? "#222" : "#f9f9f9", // Changer les couleurs de fond des sections
+  marginBottom: theme.spacing(4),
+  padding: theme.spacing(4),
+  background: theme.palette.mode === "dark" ? "#222" : "#f9f9f9",
   borderRadius: theme.shape.borderRadius,
   boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.1)",
 }));
@@ -48,6 +49,7 @@ const Profil = ({ collaboratorId }) => {
   const [editMode, setEditMode] = useState(false);
   const [editCV, setEditCV] = useState({});
   const [loading, setLoading] = useState(false);
+  const [openPopup, setOpenPopup] = useState(false);
 
   useEffect(() => {
     setLoading(true);
@@ -72,8 +74,8 @@ const Profil = ({ collaboratorId }) => {
       alert('Erreur : ID du collaborateur non disponible.');
       return;
     }
-    console.log("cv data-test1",editCV);
-    console.log("cv data-test2",editCV[0]["Nom et Prénom"]);
+    console.log("cv data-test1", editCV);
+    console.log("cv data-test2", editCV[0]["Nom et Prénom"]);
     const formattedCV = [{
       "Nom et Prénom": editCV[0]["Nom et Prénom"],
       "Titre du cv": editCV[0]["Titre du cv"],
@@ -89,7 +91,7 @@ const Profil = ({ collaboratorId }) => {
     }];
 
     setLoading(true);
-    console.log("test123",formattedCV)
+    console.log("test123", formattedCV)
     console.log('Données envoyées :', JSON.stringify(formattedCV));
 
     fetch(`https://localhost:45455/api/CV/updateCVById/${collaboratorId}`, {
@@ -99,27 +101,35 @@ const Profil = ({ collaboratorId }) => {
       },
       body: JSON.stringify(formattedCV),
     })
-    .then(response => {
-      if (!response.ok) {
-        throw new Error('Réponse réseau non OK');
-      }
-      return response.json();
-    })
-    .then(() => {
-      setCv(editCV);
-      setEditMode(false);
-      alert("CV mis à jour avec succès !");
-    })
-    .catch(error => {
-      console.error('Erreur lors de la mise à jour du CV:', error);
-      alert("Erreur lors de la mise à jour du CV: " + error.message);
-    })
-    .finally(() => setLoading(false));
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Réponse réseau non OK');
+        }
+        return response.json();
+      })
+      .then(() => {
+        setCv(editCV);
+        setEditMode(false);
+        alert("CV mis à jour avec succès !");
+      })
+      .catch(error => {
+        console.error('Erreur lors de la mise à jour du CV:', error);
+        alert("Erreur lors de la mise à jour du CV: " + error.message);
+      })
+      .finally(() => setLoading(false));
   };
 
   const handleCancel = () => {
     setEditCV(cv);
     setEditMode(false);
+  };
+
+  const handleGenerateClick = () => {
+    setOpenPopup(true);
+  };
+
+  const handleClosePopup = () => {
+    setOpenPopup(false);
   };
 
   const renderContent = (key, value) => {
@@ -196,14 +206,19 @@ const Profil = ({ collaboratorId }) => {
               </div>
             ))}
             <Grid container spacing={2} sx={{ mt: 2 }}>
-              <Grid item xs={6}>
+              <Grid item xs={4}>
                 <Button variant="contained" color="primary" onClick={handleSave}>
                   Enregistrer
                 </Button>
               </Grid>
-              <Grid item xs={6}>
+              <Grid item xs={4}>
                 <Button variant="contained" color="secondary" onClick={handleCancel}>
                   Annuler
+                </Button>
+              </Grid>
+              <Grid item xs={4}>
+                <Button variant="contained" color="info" onClick={handleGenerateClick}>
+                  Générer
                 </Button>
               </Grid>
             </Grid>
@@ -211,12 +226,32 @@ const Profil = ({ collaboratorId }) => {
         ) : (
           <>
             {Object.keys(cv).map(key => renderContent(key, cv[key]))}
-            <Button variant="contained" color="primary" onClick={handleUpdateClick} sx={{ mt: 4 }}>
-              Mettre à jour
-            </Button>
+            <Grid container spacing={2} sx={{ mt: 4 }}>
+              <Grid item xs={6}>
+                <Button variant="contained" color="primary" onClick={handleUpdateClick}>
+                  Mettre à jour
+                </Button>
+              </Grid>
+              <Grid item xs={6}>
+                <Button variant="contained" color="info" onClick={handleGenerateClick}>
+                  Générer
+                </Button>
+              </Grid>
+            </Grid>
           </>
         )}
       </StyledPaper>
+      <Dialog open={openPopup} onClose={handleClosePopup} fullScreen>
+        <DialogTitle>Contenu du Modèle</DialogTitle>
+        <DialogContent>
+          <Modele />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClosePopup} color="primary">
+            Fermer
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Container>
   );
 };

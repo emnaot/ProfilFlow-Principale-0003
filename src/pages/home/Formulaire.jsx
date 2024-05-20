@@ -20,7 +20,8 @@ import {
   useTheme,
   IconButton,
 } from "@mui/material";
-import { Person as PersonIcon, Close as CloseIcon } from "@mui/icons-material";
+import { Person as PersonIcon, Close as CloseIcon, Description as DescriptionIcon } from "@mui/icons-material";
+import Profil from "../profil/Profilcollab"; // Assurez-vous que le chemin est correct
 
 const FormulaireProfil = () => {
   const theme = useTheme();
@@ -34,6 +35,8 @@ const FormulaireProfil = () => {
 
   const [topCandidates, setTopCandidates] = useState([]);
   const [open, setOpen] = useState(false);
+  const [selectedCandidate, setSelectedCandidate] = useState(null);
+  const [openCVDialog, setOpenCVDialog] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -71,6 +74,15 @@ const FormulaireProfil = () => {
 
   const handleClose = () => {
     setOpen(false);
+  };
+
+  const handleProfileClick = (candidate) => {
+    setSelectedCandidate(candidate);
+    setOpenCVDialog(true);
+  };
+
+  const handleCloseCVDialog = () => {
+    setOpenCVDialog(false);
   };
 
   return (
@@ -209,13 +221,22 @@ const FormulaireProfil = () => {
                         </Avatar>
                       </ListItemAvatar>
                       <ListItemText
-                        primary={candidate}
+                        primary={` ${candidate.displayName}`}
+                      
                         primaryTypographyProps={{
                           variant: "h6",
                           color: theme.palette.text.primary,
                           style: { fontWeight: "500", marginLeft: theme.spacing(2) },
                         }}
+                        secondaryTypographyProps={{
+                          variant: "body2",
+                          color: theme.palette.text.secondary,
+                          style: { marginLeft: theme.spacing(2) },
+                        }}
                       />
+                      <IconButton edge="end" aria-label="profil" onClick={() => handleProfileClick(candidate)}>
+                        <DescriptionIcon />
+                      </IconButton>
                     </ListItem>
                     {index < topCandidates.length - 1 && <Divider variant="middle" />}
                   </React.Fragment>
@@ -229,6 +250,51 @@ const FormulaireProfil = () => {
           </DialogContent>
           <DialogActions sx={{ justifyContent: "center", backgroundColor: theme.palette.background.paper }}>
             <Button onClick={handleClose} variant="contained" color="secondary" sx={{ borderRadius: "20px", px: 3 }}>
+              Fermer
+            </Button>
+          </DialogActions>
+        </Dialog>
+
+        <Dialog
+          open={openCVDialog}
+          onClose={handleCloseCVDialog}
+          maxWidth="md"
+          fullWidth
+          sx={{
+            "& .MuiDialog-paper": {
+              borderRadius: "20px",
+              padding: "1.5rem",
+              backgroundColor: theme.palette.mode === "light" ? "#f9f9f9" : "#424242",
+              boxShadow: theme.palette.mode === "light"
+                ? "0 20px 40px rgba(0,0,0,0.2)"
+                : "0 20px 40px rgba(255,255,255,0.2)",
+              animation: "fadeIn 0.5s",
+            },
+            "@keyframes fadeIn": {
+              "0%": { opacity: 0, transform: "translateY(-20px)" },
+              "100%": { opacity: 1, transform: "translateY(0)" },
+            },
+          }}
+        >
+          <DialogTitle sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', pb: 0 }}>
+            <Typography variant="h6" sx={{ fontWeight: "bold", color: theme.palette.primary.main }}>
+              CV du Collaborateur
+            </Typography>
+            <IconButton onClick={handleCloseCVDialog} color="inherit">
+              <CloseIcon />
+            </IconButton>
+          </DialogTitle>
+          <DialogContent dividers sx={{ backgroundColor: theme.palette.mode === "light" ? "#ffffff" : "#333333" }}>
+            {selectedCandidate ? (
+              <Profil collaboratorId={selectedCandidate.id} />
+            ) : (
+              <Typography align="center" variant="h6" color="error">
+                Aucun CV disponible
+              </Typography>
+            )}
+          </DialogContent>
+          <DialogActions sx={{ justifyContent: "center", backgroundColor: theme.palette.background.paper }}>
+            <Button onClick={handleCloseCVDialog} variant="contained" color="secondary" sx={{ borderRadius: "20px", px: 3 }}>
               Fermer
             </Button>
           </DialogActions>
