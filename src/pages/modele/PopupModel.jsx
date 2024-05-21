@@ -1,23 +1,27 @@
-import React, { useState } from "react";
-import { Typography, Grid, Container, Card, CardContent, CardMedia, CardActionArea, Dialog, DialogContent, DialogTitle } from "@mui/material";
+import React, { useState, useEffect } from "react";
+import { Typography, Grid, Container, Card, CardContent, CardMedia, CardActionArea, Button, Dialog, DialogContent, DialogTitle, DialogActions } from "@mui/material";
 import CVTemplate1 from "./templates/template1";
 import CVTemplate2 from "./templates/template2";
 import CVTemplate3 from "./templates/template3";
+import CVTemplate4 from "./templates/template4";
+import CVTemplate5 from "./templates/template5";
+import CVTemplate6 from "./templates/template6";
+import jsPDF from "jspdf";
+import html2canvas from "html2canvas";
 
 // Placeholder images for the templates
 const templateImages = {
-  template1: "/images/1.PNG",
-  template2: "/images/2.PNG",
-  template3: "/images/3.PNG",
-  template4: "/images/4.PNG",
-  template5: "/images/5.PNG",
-  template6: "/images/6.PNG",
+  template1: "/images/1.png",
+  template2: "/images/2.png",
+  template3: "/images/3.png",
+  template4: "/images/4.png", // You can add actual images for templates 4, 5, and 6
+  template5: "/images/5.png",
+  template6: "/images/6.png",
 };
 
-const Modele = () => {
+const Modele = ({ selectedCV }) => {
   const [open, setOpen] = useState(false);
   const [selectedTemplate, setSelectedTemplate] = useState(null);
-  const [hoveredTemplate, setHoveredTemplate] = useState(null);
 
   const handleOpen = (template) => {
     setSelectedTemplate(template);
@@ -29,23 +33,39 @@ const Modele = () => {
     setSelectedTemplate(null);
   };
 
+  useEffect(() => {
+    if (selectedCV) {
+      // Logique pour utiliser les données de selectedCV si nécessaire
+      console.log('Données du CV reçu:', selectedCV);
+    }
+  }, [selectedCV]);
+
+  const handleGeneratePDF = () => {
+    const input = document.getElementById('template-to-print');
+    html2canvas(input).then(canvas => {
+      const imgData = canvas.toDataURL('image/png');
+      const pdf = new jsPDF('p', 'mm', 'a4');
+      const imgProps = pdf.getImageProperties(imgData);
+      const pdfWidth = pdf.internal.pageSize.getWidth();
+      const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+      pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+      pdf.save("cv.pdf");
+    });
+  };
+
   return (
-    <Container maxWidth="xl">
+    <Container maxWidth="xl" sx={{ mt: 4 }}>
       <Typography variant="h3" gutterBottom>
         Page des Modèles
       </Typography>
-      <Typography variant="body1">
-        Bienvenue sur la page des Modèles de votre applicationnn.
+      <Typography variant="body1" gutterBottom>
+        Bienvenue sur la page des Modèles de votre application. Choisissez un modèle pour générer votre CV.
       </Typography>
 
-      <Grid container spacing={3} style={{ marginTop: '20px' }}>
+      <Grid container spacing={4} style={{ marginTop: '20px' }}>
         <Grid item xs={12} sm={6} md={4}>
-          <Card
-            onClick={() => handleOpen("template1")}
-            onMouseEnter={() => setHoveredTemplate("template1")}
-            onMouseLeave={() => setHoveredTemplate(null)}
-          >
-            <CardActionArea>
+          <Card sx={{ boxShadow: 3 }}>
+            <CardActionArea onClick={() => handleOpen("template1")}>
               <CardMedia
                 component="img"
                 height="140"
@@ -62,12 +82,8 @@ const Modele = () => {
         </Grid>
 
         <Grid item xs={12} sm={6} md={4}>
-          <Card
-            onClick={() => handleOpen("template2")}
-            onMouseEnter={() => setHoveredTemplate("template2")}
-            onMouseLeave={() => setHoveredTemplate(null)}
-          >
-            <CardActionArea>
+          <Card sx={{ boxShadow: 3 }}>
+            <CardActionArea onClick={() => handleOpen("template2")}>
               <CardMedia
                 component="img"
                 height="140"
@@ -84,12 +100,8 @@ const Modele = () => {
         </Grid>
 
         <Grid item xs={12} sm={6} md={4}>
-          <Card
-            onClick={() => handleOpen("template3")}
-            onMouseEnter={() => setHoveredTemplate("template3")}
-            onMouseLeave={() => setHoveredTemplate(null)}
-          >
-            <CardActionArea>
+          <Card sx={{ boxShadow: 3 }}>
+            <CardActionArea onClick={() => handleOpen("template3")}>
               <CardMedia
                 component="img"
                 height="140"
@@ -106,12 +118,8 @@ const Modele = () => {
         </Grid>
 
         <Grid item xs={12} sm={6} md={4}>
-          <Card
-            onClick={() => handleOpen("template4")}
-            onMouseEnter={() => setHoveredTemplate("template4")}
-            onMouseLeave={() => setHoveredTemplate(null)}
-          >
-            <CardActionArea>
+          <Card sx={{ boxShadow: 3 }}>
+            <CardActionArea onClick={() => handleOpen("template4")}>
               <CardMedia
                 component="img"
                 height="140"
@@ -128,12 +136,8 @@ const Modele = () => {
         </Grid>
 
         <Grid item xs={12} sm={6} md={4}>
-          <Card
-            onClick={() => handleOpen("template5")}
-            onMouseEnter={() => setHoveredTemplate("template5")}
-            onMouseLeave={() => setHoveredTemplate(null)}
-          >
-            <CardActionArea>
+          <Card sx={{ boxShadow: 3 }}>
+            <CardActionArea onClick={() => handleOpen("template5")}>
               <CardMedia
                 component="img"
                 height="140"
@@ -150,12 +154,8 @@ const Modele = () => {
         </Grid>
 
         <Grid item xs={12} sm={6} md={4}>
-          <Card
-            onClick={() => handleOpen("template6")}
-            onMouseEnter={() => setHoveredTemplate("template6")}
-            onMouseLeave={() => setHoveredTemplate(null)}
-          >
-            <CardActionArea>
+          <Card sx={{ boxShadow: 3 }}>
+            <CardActionArea onClick={() => handleOpen("template6")}>
               <CardMedia
                 component="img"
                 height="140"
@@ -172,26 +172,26 @@ const Modele = () => {
         </Grid>
       </Grid>
 
-      {hoveredTemplate && (
-        <Dialog
-          open={Boolean(hoveredTemplate)}
-          onClose={() => setHoveredTemplate(null)}
-          maxWidth="sm"
-          fullWidth
-        >
-          <DialogContent>
-            <img src={templateImages[hoveredTemplate]} alt={`Modèle ${hoveredTemplate}`} width="100%" />
-          </DialogContent>
-        </Dialog>
-      )}
-
       <Dialog open={open} onClose={handleClose} maxWidth="md" fullWidth>
         <DialogTitle>Modèle</DialogTitle>
         <DialogContent>
-          {selectedTemplate && (
-            <img src={templateImages[selectedTemplate]} alt={`Modèle ${selectedTemplate}`} width="100%" />
-          )}
+          <div id="template-to-print">
+            {selectedTemplate === "template1" && <CVTemplate1 cvData={selectedCV[0]} />}
+            {selectedTemplate === "template2" && <CVTemplate2 cvData={selectedCV[0]} />}
+            {selectedTemplate === "template3" && <CVTemplate3 cvData={selectedCV[0]} />}
+            {selectedTemplate === "template4" && <CVTemplate4 cvData={selectedCV[0]} />}
+            {selectedTemplate === "template5" && <CVTemplate5 cvData={selectedCV[0]} />}
+            {selectedTemplate === "template6" && <CVTemplate6 cvData={selectedCV[0]} />}
+          </div>
         </DialogContent>
+        <DialogActions>
+          <Button variant="contained" color="primary" onClick={handleGeneratePDF}>
+            Générer
+          </Button>
+          <Button onClick={handleClose} color="primary">
+            Fermer
+          </Button>
+        </DialogActions>
       </Dialog>
     </Container>
   );

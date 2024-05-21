@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Container, Typography, Paper, Grid, Button, CircularProgress, TextField, Dialog, DialogTitle, DialogContent, DialogActions } from "@mui/material";
 import { styled } from "@mui/material/styles";
-import Modele from '../modele/modele'; // Assurez-vous d'importer correctement le composant Modele
+import PopupModel from '../modele/PopupModel'; // Assurez-vous d'importer correctement le composant Modele
 
 const StyledPaper = styled(Paper)(({ theme }) => ({
   padding: theme.spacing(6),
@@ -246,7 +246,7 @@ const Profil = ({ collaboratorId }) => {
       <Dialog open={openPopup} onClose={handleClosePopup} fullScreen>
         <DialogTitle>Contenu du Modèle</DialogTitle>
         <DialogContent>
-          <Modele selectedCV={selectedCV} /> {/* Passez les données de CV au composant Modele */}
+          <PopupModel selectedCV={selectedCV} /> {/* Passez les données de CV au composant Modele */}
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClosePopup} color="primary">
