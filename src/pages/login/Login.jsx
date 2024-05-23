@@ -89,7 +89,7 @@ export default function SignInSide() {
           sm={4}
           md={7}
           sx={{
-            backgroundImage: `url("./images/Back.png")`,
+            backgroundImage: `url("./images/back6.webp")`,
             backgroundRepeat: "no-repeat",
             backgroundSize: "cover",
             backgroundPosition: "center",

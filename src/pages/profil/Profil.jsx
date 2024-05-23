@@ -125,20 +125,20 @@ const Profil = () => {
   };
 
   const renderContent = (key, value) => {
+    const avatarUrl = ""; // Remplacez par l'URL de votre photo
     if (typeof value === 'object' && value !== null) {
       return (
         <React.Fragment key={key}>
           <Card sx={{ mb: 3, borderRadius: '12px', boxShadow: 3 }}>
             <CardHeader
-              avatar={<Avatar sx={{ bgcolor: '#0d3d73' }}></Avatar>}
-              
+              avatar={<Avatar sx={{ width: 72, height: 72 }} src={avatarUrl}>{key.charAt(0)}</Avatar>}
               titleTypographyProps={{ variant: 'h6', color: 'primary' }}
             />
             <CardContent>
               {Object.keys(value).map(subKey => (
                 <div key={subKey} style={{ marginBottom: '10px' }}>
                   <FieldLabel variant="subtitle2">{subKey}:</FieldLabel>
-                  <FieldValue variant="body2">{value[subKey]}</FieldValue>
+                  <FieldValue variant="body2" component="pre">{value[subKey]}</FieldValue>
                 </div>
               ))}
             </CardContent>
@@ -151,12 +151,12 @@ const Profil = () => {
       <React.Fragment key={key}>
         <Card sx={{ mb: 3, borderRadius: '12px', boxShadow: 3 }}>
           <CardHeader
-            avatar={<Avatar sx={{ bgcolor: '#0d3d73' }}>{key.charAt(0)}</Avatar>}
+            avatar={<Avatar sx={{ width: 72, height: 72 }} src={avatarUrl}>{key.charAt(0)}</Avatar>}
             title={key}
             titleTypographyProps={{ variant: 'h6', color: 'primary' }}
           />
           <CardContent>
-            <FieldValue>{value}</FieldValue>
+            <FieldValue component="pre">{value}</FieldValue>
           </CardContent>
         </Card>
         <Divider sx={{ my: 2 }} />

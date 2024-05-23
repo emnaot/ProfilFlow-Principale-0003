@@ -1,13 +1,6 @@
 import React from 'react';
-import { Container, Paper, Typography, Box, Grid, Avatar, Divider, List, ListItem, ListItemText, ListItemIcon } from '@mui/material';
+import { Container, Paper, Typography, Box, Grid, Avatar, Divider } from '@mui/material';
 import { styled } from '@mui/material/styles';
-import LocationOnIcon from '@mui/icons-material/LocationOn';
-import PhoneIcon from '@mui/icons-material/Phone';
-import EmailIcon from '@mui/icons-material/Email';
-import LanguageIcon from '@mui/icons-material/Language';
-import StarIcon from '@mui/icons-material/Star';
-import InterestsIcon from '@mui/icons-material/Interests';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 const StyledPaper = styled(Paper)(({ theme }) => ({
   padding: theme.spacing(4),
@@ -31,6 +24,7 @@ const Title = styled(Typography)(({ theme }) => ({
   fontWeight: 'bold',
   marginBottom: theme.spacing(1),
   color: theme.palette.primary.main,
+  fontSize: '1.5rem', // réduction de la taille du titre principal
 }));
 
 const Section = styled(Box)(({ theme }) => ({
@@ -43,6 +37,7 @@ const SectionTitle = styled(Typography)(({ theme }) => ({
   marginBottom: theme.spacing(2),
   borderBottom: `2px solid ${theme.palette.primary.main}`,
   paddingBottom: theme.spacing(1),
+  fontSize: '1.25rem', // réduction de la taille des titres de section
 }));
 
 const DividerStyled = styled(Divider)(({ theme }) => ({
@@ -63,11 +58,11 @@ const CVTemplate5 = ({ cvData }) => {
     <Container maxWidth="lg">
       <StyledPaper>
         <Header>
-          <Avatar alt={cvData["Nom et Prénom"]} src="/static/images/avatar/1.jpg" sx={{ width: 100, height: 100, marginRight: 2 }} />
+          <Avatar alt={cvData["Nom et Prénom"]} src="/static/images/avatar/1.jpg" sx={{ width: 80, height: 80, marginRight: 2 }} />
           <Box>
             <Title variant="h4">{cvData["Nom et Prénom"]}</Title>
-            <Typography variant="body1">{cvData["Titre du cv"]}</Typography>
-            <Typography variant="body2" mt={2}>{cvData["Informations Personnelles"]}</Typography>
+            <Typography variant="body1" sx={{ fontSize: '0.9rem' }}>{cvData["Titre du cv"]}</Typography>
+            <Typography variant="body2" mt={2} sx={{ fontSize: '0.8rem' }}>{cvData["Informations Personnelles"]}</Typography>
           </Box>
         </Header>
 
@@ -76,28 +71,28 @@ const CVTemplate5 = ({ cvData }) => {
             <Sidebar>
               <Section>
                 <SectionTitle variant="h6">Compétences</SectionTitle>
-                <Typography variant="body1">{cvData["Compétences"]}</Typography>
+                <Typography variant="body1" sx={{ fontSize: '0.9rem' }}>{cvData["Compétences"]}</Typography>
               </Section>
 
               <DividerStyled />
 
               <Section>
                 <SectionTitle variant="h6">Langues</SectionTitle>
-                <Typography variant="body1">{cvData["Langues"]}</Typography>
+                <Typography variant="body1" sx={{ fontSize: '0.9rem' }}>{cvData["Langues"]}</Typography>
               </Section>
 
               <DividerStyled />
 
               <Section>
                 <SectionTitle variant="h6">Vie Associative</SectionTitle>
-                <Typography variant="body1">{cvData["Vie Associative"]}</Typography>
+                <Typography variant="body1" sx={{ fontSize: '0.9rem' }}>{cvData["Vie Associative"]}</Typography>
               </Section>
 
               <DividerStyled />
 
               <Section>
                 <SectionTitle variant="h6">Centres d'intérêt</SectionTitle>
-                <Typography variant="body1">{cvData["Centre d'interet"]}</Typography>
+                <Typography variant="body1" sx={{ fontSize: '0.9rem' }}>{cvData["Centre d'interet"]}</Typography>
               </Section>
             </Sidebar>
           </Grid>
@@ -105,28 +100,28 @@ const CVTemplate5 = ({ cvData }) => {
           <Grid item xs={12} md={8}>
             <Section>
               <SectionTitle variant="h5">Formations</SectionTitle>
-              <Typography variant="body1">{cvData["Education"]}</Typography>
+              <Typography variant="body1" sx={{ fontSize: '0.9rem' }}>{cvData["Education"]}</Typography>
             </Section>
 
             <DividerStyled />
 
             <Section>
               <SectionTitle variant="h5">Expériences Professionnelles</SectionTitle>
-              <Typography variant="body1">{cvData["Experience Professionnelle"]}</Typography>
+              <Typography variant="body1" sx={{ fontSize: '0.9rem' }}>{cvData["Experience Professionnelle"]}</Typography>
             </Section>
 
             <DividerStyled />
 
             <Section>
               <SectionTitle variant="h5">Projets Académiques</SectionTitle>
-              <Typography variant="body1">{cvData["Projet Académique"]}</Typography>
+              <Typography variant="body1" sx={{ fontSize: '0.9rem' }}>{cvData["Projet Académique"]}</Typography>
             </Section>
 
             <DividerStyled />
 
             <Section>
               <SectionTitle variant="h5">Certifications</SectionTitle>
-              <Typography variant="body1">{cvData["Certifications"]}</Typography>
+              <Typography variant="body1" sx={{ fontSize: '0.9rem' }}>{cvData["Certifications"]}</Typography>
             </Section>
           </Grid>
         </Grid>

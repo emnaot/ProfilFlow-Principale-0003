@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import { Typography, Grid, Container, Card, CardContent, CardMedia, CardActionArea, Dialog, DialogContent, DialogTitle } from "@mui/material";
+import { Typography, Grid, Container, Card, CardContent, CardMedia, CardActionArea, Popover, Box } from "@mui/material";
+import { styled } from '@mui/material/styles';
 import CVTemplate1 from "./templates/template1";
 import CVTemplate2 from "./templates/template2";
 import CVTemplate3 from "./templates/template3";
 
-// Placeholder images for the templates
 const templateImages = {
   template1: "/images/1.PNG",
   template2: "/images/2.PNG",
@@ -14,185 +14,93 @@ const templateImages = {
   template6: "/images/6.PNG",
 };
 
+const StyledCard = styled(Card)(({ theme }) => ({
+  transition: 'transform 0.3s',
+  '&:hover': {
+    transform: 'scale(1.05)',
+    boxShadow: theme.shadows[10],
+  },
+}));
+
+const StyledCardContent = styled(CardContent)(({ theme }) => ({
+  backgroundColor: theme.palette.background.paper,
+  textAlign: 'center',
+}));
+
 const Modele = () => {
-  const [open, setOpen] = useState(false);
-  const [selectedTemplate, setSelectedTemplate] = useState(null);
+  const [anchorEl, setAnchorEl] = useState(null);
   const [hoveredTemplate, setHoveredTemplate] = useState(null);
 
-  const handleOpen = (template) => {
-    setSelectedTemplate(template);
-    setOpen(true);
+  const handlePopoverOpen = (event, template) => {
+    setHoveredTemplate(template);
+    setAnchorEl(event.currentTarget);
   };
 
-  const handleClose = () => {
-    setOpen(false);
-    setSelectedTemplate(null);
+  const handlePopoverClose = () => {
+    setHoveredTemplate(null);
+    setAnchorEl(null);
   };
 
   return (
-    <Container maxWidth="xl">
-      <Typography variant="h3" gutterBottom>
+    <Container maxWidth="xl" sx={{ paddingTop: 4, paddingBottom: 4 }}>
+      <Typography variant="h3" gutterBottom align="center">
         Page des Modèles
       </Typography>
-      <Typography variant="body1">
-        Bienvenue sur la page des Modèles de votre applicationnn.
+      <Typography variant="body1" align="center" sx={{ marginBottom: 4 }}>
+        Bienvenue sur la page des Modèles de votre application.
       </Typography>
 
-      <Grid container spacing={3} style={{ marginTop: '20px' }}>
-        <Grid item xs={12} sm={6} md={4}>
-          <Card
-            onClick={() => handleOpen("template1")}
-            onMouseEnter={() => setHoveredTemplate("template1")}
-            onMouseLeave={() => setHoveredTemplate(null)}
-          >
-            <CardActionArea>
-              <CardMedia
-                component="img"
-                height="140"
-                image={templateImages.template1}
-                alt="Modèle 1"
-              />
-              <CardContent>
-                <Typography variant="h5" gutterBottom>
-                  Modèle 1
-                </Typography>
-              </CardContent>
-            </CardActionArea>
-          </Card>
-        </Grid>
-
-        <Grid item xs={12} sm={6} md={4}>
-          <Card
-            onClick={() => handleOpen("template2")}
-            onMouseEnter={() => setHoveredTemplate("template2")}
-            onMouseLeave={() => setHoveredTemplate(null)}
-          >
-            <CardActionArea>
-              <CardMedia
-                component="img"
-                height="140"
-                image={templateImages.template2}
-                alt="Modèle 2"
-              />
-              <CardContent>
-                <Typography variant="h5" gutterBottom>
-                  Modèle 2
-                </Typography>
-              </CardContent>
-            </CardActionArea>
-          </Card>
-        </Grid>
-
-        <Grid item xs={12} sm={6} md={4}>
-          <Card
-            onClick={() => handleOpen("template3")}
-            onMouseEnter={() => setHoveredTemplate("template3")}
-            onMouseLeave={() => setHoveredTemplate(null)}
-          >
-            <CardActionArea>
-              <CardMedia
-                component="img"
-                height="140"
-                image={templateImages.template3}
-                alt="Modèle 3"
-              />
-              <CardContent>
-                <Typography variant="h5" gutterBottom>
-                  Modèle 3
-                </Typography>
-              </CardContent>
-            </CardActionArea>
-          </Card>
-        </Grid>
-
-        <Grid item xs={12} sm={6} md={4}>
-          <Card
-            onClick={() => handleOpen("template4")}
-            onMouseEnter={() => setHoveredTemplate("template4")}
-            onMouseLeave={() => setHoveredTemplate(null)}
-          >
-            <CardActionArea>
-              <CardMedia
-                component="img"
-                height="140"
-                image={templateImages.template4}
-                alt="Modèle 4"
-              />
-              <CardContent>
-                <Typography variant="h5" gutterBottom>
-                  Modèle 4
-                </Typography>
-              </CardContent>
-            </CardActionArea>
-          </Card>
-        </Grid>
-
-        <Grid item xs={12} sm={6} md={4}>
-          <Card
-            onClick={() => handleOpen("template5")}
-            onMouseEnter={() => setHoveredTemplate("template5")}
-            onMouseLeave={() => setHoveredTemplate(null)}
-          >
-            <CardActionArea>
-              <CardMedia
-                component="img"
-                height="140"
-                image={templateImages.template5}
-                alt="Modèle 5"
-              />
-              <CardContent>
-                <Typography variant="h5" gutterBottom>
-                  Modèle 5
-                </Typography>
-              </CardContent>
-            </CardActionArea>
-          </Card>
-        </Grid>
-
-        <Grid item xs={12} sm={6} md={4}>
-          <Card
-            onClick={() => handleOpen("template6")}
-            onMouseEnter={() => setHoveredTemplate("template6")}
-            onMouseLeave={() => setHoveredTemplate(null)}
-          >
-            <CardActionArea>
-              <CardMedia
-                component="img"
-                height="140"
-                image={templateImages.template6}
-                alt="Modèle 6"
-              />
-              <CardContent>
-                <Typography variant="h5" gutterBottom>
-                  Modèle 6
-                </Typography>
-              </CardContent>
-            </CardActionArea>
-          </Card>
-        </Grid>
+      <Grid container spacing={4}>
+        {Object.keys(templateImages).map((template) => (
+          <Grid item xs={12} sm={6} md={4} key={template}>
+            <StyledCard
+              onMouseEnter={(event) => handlePopoverOpen(event, template)}
+              onMouseLeave={handlePopoverClose}
+            >
+              <CardActionArea>
+                <CardMedia
+                  component="img"
+                  height="200"
+                  image={templateImages[template]}
+                  alt={`Modèle ${template}`}
+                />
+                <StyledCardContent>
+                  <Typography variant="h5" gutterBottom>
+                    {`Modèle ${template}`}
+                  </Typography>
+                </StyledCardContent>
+              </CardActionArea>
+            </StyledCard>
+          </Grid>
+        ))}
       </Grid>
 
-      {hoveredTemplate && (
-        <Dialog
-          open={Boolean(hoveredTemplate)}
-          onClose={() => setHoveredTemplate(null)}
-          maxWidth="sm"
-          fullWidth
-        >
-          <DialogContent>
-            <img src={templateImages[hoveredTemplate]} alt={`Modèle ${hoveredTemplate}`} width="100%" />
-          </DialogContent>
-        </Dialog>
-      )}
-
-      <Dialog open={open} onClose={handleClose} maxWidth="md" fullWidth>
-        <DialogTitle>Modèle</DialogTitle>
-        <DialogContent>
-          {selectedTemplate && (
-            <img src={templateImages[selectedTemplate]} alt={`Modèle ${selectedTemplate}`} width="100%" />
-          )}
-        </DialogContent>
-      </Dialog>
+      <Popover
+        open={Boolean(anchorEl)}
+        anchorEl={anchorEl}
+        onClose={handlePopoverClose}
+        anchorOrigin={{
+          vertical: 'top',
+          horizontal: 'center',
+        }}
+        transformOrigin={{
+          vertical: 'top',
+          horizontal: 'center',
+        }}
+      >
+        {hoveredTemplate && (
+          <Box p={2} style={{ width: '300px', overflow: 'hidden' }}>
+            <Typography variant="h5" align="center" gutterBottom>
+              {`Modèle ${hoveredTemplate}`}
+            </Typography>
+            <img
+              src={templateImages[hoveredTemplate]}
+              alt={`Modèle ${hoveredTemplate}`}
+              style={{ width: '100%', transform: 'translateY(-30px)' }}
+            />
+          </Box>
+        )}
+      </Popover>
     </Container>
   );
 };
