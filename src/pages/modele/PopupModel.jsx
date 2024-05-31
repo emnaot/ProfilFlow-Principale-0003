@@ -9,12 +9,11 @@ import CVTemplate6 from "./templates/template6";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 
-// Placeholder images for the templates
 const templateImages = {
   template1: "/images/1.png",
   template2: "/images/2.png",
   template3: "/images/3.png",
-  template4: "/images/4.png", // You can add actual images for templates 4, 5, and 6
+  template4: "/images/4.png",
   template5: "/images/5.png",
   template6: "/images/6.png",
 };
@@ -35,7 +34,6 @@ const Modele = ({ selectedCV }) => {
 
   useEffect(() => {
     if (selectedCV) {
-      // Logique pour utiliser les données de selectedCV si nécessaire
       console.log('Données du CV reçu:', selectedCV);
     }
   }, [selectedCV]);
@@ -54,122 +52,34 @@ const Modele = ({ selectedCV }) => {
   };
 
   return (
-    <Container maxWidth="xl" sx={{ mt: 4 }}>
-      <Typography variant="h3" gutterBottom>
-        Page des Modèles
+    <Container maxWidth="xl" sx={{ paddingTop: 4, paddingBottom: 4 }}>
+      <Typography variant="h3" gutterBottom align="center" sx={{ fontWeight: 'bold', mb: 2 }}>
+        Bibliothèque de Modèles
       </Typography>
-      <Typography variant="body1" gutterBottom>
-        Bienvenue sur la page des Modèles de votre application. Choisissez un modèle pour générer votre CV.
+      <Typography variant="body1" align="center" sx={{ marginBottom: 4 }}>
+        Explorez notre collection de modèles pour vos besoins.
       </Typography>
 
-      <Grid container spacing={4} style={{ marginTop: '20px' }}>
-        <Grid item xs={12} sm={6} md={4}>
-          <Card sx={{ boxShadow: 3 }}>
-            <CardActionArea onClick={() => handleOpen("template1")}>
-              <CardMedia
-                component="img"
-                height="140"
-                image={templateImages.template1}
-                alt="Modèle 1"
-              />
-              <CardContent>
-                <Typography variant="h5" gutterBottom>
-                  Modèle 1
-                </Typography>
-              </CardContent>
-            </CardActionArea>
-          </Card>
-        </Grid>
-
-        <Grid item xs={12} sm={6} md={4}>
-          <Card sx={{ boxShadow: 3 }}>
-            <CardActionArea onClick={() => handleOpen("template2")}>
-              <CardMedia
-                component="img"
-                height="140"
-                image={templateImages.template2}
-                alt="Modèle 2"
-              />
-              <CardContent>
-                <Typography variant="h5" gutterBottom>
-                  Modèle 2
-                </Typography>
-              </CardContent>
-            </CardActionArea>
-          </Card>
-        </Grid>
-
-        <Grid item xs={12} sm={6} md={4}>
-          <Card sx={{ boxShadow: 3 }}>
-            <CardActionArea onClick={() => handleOpen("template3")}>
-              <CardMedia
-                component="img"
-                height="140"
-                image={templateImages.template3}
-                alt="Modèle 3"
-              />
-              <CardContent>
-                <Typography variant="h5" gutterBottom>
-                  Modèle 3
-                </Typography>
-              </CardContent>
-            </CardActionArea>
-          </Card>
-        </Grid>
-
-        <Grid item xs={12} sm={6} md={4}>
-          <Card sx={{ boxShadow: 3 }}>
-            <CardActionArea onClick={() => handleOpen("template4")}>
-              <CardMedia
-                component="img"
-                height="140"
-                image={templateImages.template4}
-                alt="Modèle 4"
-              />
-              <CardContent>
-                <Typography variant="h5" gutterBottom>
-                  Modèle 4
-                </Typography>
-              </CardContent>
-            </CardActionArea>
-          </Card>
-        </Grid>
-
-        <Grid item xs={12} sm={6} md={4}>
-          <Card sx={{ boxShadow: 3 }}>
-            <CardActionArea onClick={() => handleOpen("template5")}>
-              <CardMedia
-                component="img"
-                height="140"
-                image={templateImages.template5}
-                alt="Modèle 5"
-              />
-              <CardContent>
-                <Typography variant="h5" gutterBottom>
-                  Modèle 5
-                </Typography>
-              </CardContent>
-            </CardActionArea>
-          </Card>
-        </Grid>
-
-        <Grid item xs={12} sm={6} md={4}>
-          <Card sx={{ boxShadow: 3 }}>
-            <CardActionArea onClick={() => handleOpen("template6")}>
-              <CardMedia
-                component="img"
-                height="140"
-                image={templateImages.template6}
-                alt="Modèle 6"
-              />
-              <CardContent>
-                <Typography variant="h5" gutterBottom>
-                  Modèle 6
-                </Typography>
-              </CardContent>
-            </CardActionArea>
-          </Card>
-        </Grid>
+      <Grid container spacing={4}>
+        {Object.keys(templateImages).map((template) => (
+          <Grid item xs={12} sm={6} md={4} key={template}>
+            <Card sx={{ boxShadow: 3, transition: 'transform 0.3s', '&:hover': { transform: 'scale(1.05)', boxShadow: 10 } }}>
+              <CardActionArea onClick={() => handleOpen(template)}>
+                <CardMedia
+                  component="img"
+                  height="200"
+                  image={templateImages[template]}
+                  alt={`Modèle ${template}`}
+                />
+                <CardContent sx={{ backgroundColor: 'background.paper', textAlign: 'center' }}>
+                  <Typography variant="h5" gutterBottom>
+                    {`Modèle ${template}`}
+                  </Typography>
+                </CardContent>
+              </CardActionArea>
+            </Card>
+          </Grid>
+        ))}
       </Grid>
 
       <Dialog open={open} onClose={handleClose} maxWidth="md" fullWidth>
@@ -186,7 +96,7 @@ const Modele = ({ selectedCV }) => {
         </DialogContent>
         <DialogActions>
           <Button variant="contained" color="primary" onClick={handleGeneratePDF}>
-            Générer
+            Télécharger
           </Button>
           <Button onClick={handleClose} color="primary">
             Fermer

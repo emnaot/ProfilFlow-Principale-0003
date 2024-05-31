@@ -63,7 +63,7 @@ const Drawerr = ({
       text: "Profil",
       icon: <Person2 />,
       path: "/profil",
-      roles: ["Collaborateur", "Responsable", "Administrateur"],
+      roles: ["Collaborateur", "Responsable"],
     },
     {
       text: "Modèles",

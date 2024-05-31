@@ -68,9 +68,11 @@ const ImporterMission = () => {
                 ? "0 2px 4px rgba(0,0,0,0.5)"
                 : "0 2px 4px rgba(255,255,255,0.5)",
             color: theme.palette.mode === "light" ? "#ffffff" : "#294c60",
+            textAlign: "center", // Centrer le texte
+            display: "block", // Assurer que le texte occupe toute la largeur disponible
           }}
         >
-          Importation Modèle Mission
+          Importer une mission à partir d’un modèle
         </Typography>
         <IconButton
           color="inherit"

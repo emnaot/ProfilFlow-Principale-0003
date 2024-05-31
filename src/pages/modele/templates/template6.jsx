@@ -66,20 +66,7 @@ const CVTemplate6 = ({ cvData }) => {
         <Grid container spacing={4}>
           <Grid item xs={12} md={4}>
             <Sidebar>
-              <Section>
-                <SectionTitle variant="h6">Contact</SectionTitle>
-                <List>
-                  <ListItem>
-                    <ListItemText primary={cvData["Téléphone"]} sx={{ fontSize: '0.9rem' }} />
-                  </ListItem>
-                  <ListItem>
-                    <ListItemText primary={cvData["Email"]} sx={{ fontSize: '0.9rem' }} />
-                  </ListItem>
-                  <ListItem>
-                    <ListItemText primary={cvData["Adresse"]} sx={{ fontSize: '0.9rem' }} />
-                  </ListItem>
-                </List>
-              </Section>
+          
 
               <Section>
                 <SectionTitle variant="h6">Compétences</SectionTitle>

@@ -27,6 +27,19 @@ const StyledCardContent = styled(CardContent)(({ theme }) => ({
   textAlign: 'center',
 }));
 
+const StyledPopover = styled(Popover)(({ theme }) => ({
+  pointerEvents: 'none',
+}));
+
+const StyledBox = styled(Box)(({ theme }) => ({
+  padding: theme.spacing(2),
+  width: '300px',
+  overflow: 'hidden',
+  [theme.breakpoints.down('sm')]: {
+    width: '100%',
+  },
+}));
+
 const Modele = () => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [hoveredTemplate, setHoveredTemplate] = useState(null);
@@ -42,12 +55,12 @@ const Modele = () => {
   };
 
   return (
-    <Container maxWidth="xl" sx={{ paddingTop: 4, paddingBottom: 4 }}>
-      <Typography variant="h3" gutterBottom align="center">
-        Page des Modèles
+    <Container maxWidth="xl" sx={{ paddingTop: 2, paddingBottom: 4 }}>
+      <Typography variant="h3" gutterBottom align="center" sx={{ fontWeight: 'bold', mb: 2 }}>
+        Bibliothèque de Modèles
       </Typography>
       <Typography variant="body1" align="center" sx={{ marginBottom: 4 }}>
-        Bienvenue sur la page des Modèles de votre application.
+        Explorez notre collection de modèles pour vos besoins.
       </Typography>
 
       <Grid container spacing={4}>
@@ -75,7 +88,7 @@ const Modele = () => {
         ))}
       </Grid>
 
-      <Popover
+      <StyledPopover
         open={Boolean(anchorEl)}
         anchorEl={anchorEl}
         onClose={handlePopoverClose}
@@ -89,7 +102,7 @@ const Modele = () => {
         }}
       >
         {hoveredTemplate && (
-          <Box p={2} style={{ width: '300px', overflow: 'hidden' }}>
+          <StyledBox>
             <Typography variant="h5" align="center" gutterBottom>
               {`Modèle ${hoveredTemplate}`}
             </Typography>
@@ -98,9 +111,9 @@ const Modele = () => {
               alt={`Modèle ${hoveredTemplate}`}
               style={{ width: '100%', transform: 'translateY(-30px)' }}
             />
-          </Box>
+          </StyledBox>
         )}
-      </Popover>
+      </StyledPopover>
     </Container>
   );
 };

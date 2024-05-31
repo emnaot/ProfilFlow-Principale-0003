@@ -10,7 +10,7 @@ import {
   Dialog,
   DialogTitle,
   DialogContent,
-  DialogActions,
+  IconButton,
   List,
   ListItem,
   ListItemAvatar,
@@ -18,7 +18,6 @@ import {
   Avatar,
   Divider,
   useTheme,
-  IconButton,
 } from "@mui/material";
 import { Person as PersonIcon, Close as CloseIcon, Description as DescriptionIcon } from "@mui/icons-material";
 import Profil from "../profil/Profilcollab"; // Assurez-vous que le chemin est correct
@@ -28,7 +27,7 @@ const FormulaireProfil = () => {
 
   const [formValues, setFormValues] = useState({
     Formations: "",
-    Durée_Expériencess: "",
+    Durée_Expérience: "",
     Technologies_Demandées: "",
     Description_Mission: "",
   });
@@ -37,6 +36,7 @@ const FormulaireProfil = () => {
   const [open, setOpen] = useState(false);
   const [selectedCandidate, setSelectedCandidate] = useState(null);
   const [openCVDialog, setOpenCVDialog] = useState(false);
+  const [error, setError] = useState('');
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -60,15 +60,24 @@ const FormulaireProfil = () => {
       });
 
       if (!response.ok) {
-        throw new Error("Erreur lors de l'envoi des données au backend .NET");
+        if (response.status === 404) {
+          setError('Aucun collaborateur trouvé.');
+          setTopCandidates([]);
+          setOpen(true); // Ouvrir la boîte de dialogue d'erreur
+        } else {
+          throw new Error("Erreur lors de l'envoi des données au backend .NET");
+        }
+      } else {
+        const topCandidates = await response.json();
+        console.log("Candidats trouvés :", topCandidates);
+        setTopCandidates(topCandidates);
+        setError('');
+        setOpen(true); // Ouvrir la boîte de dialogue
       }
-
-      const topCandidates = await response.json();
-      console.log("Top 3 des candidats :", topCandidates);
-      setTopCandidates(topCandidates);
-      setOpen(true); // Ouvrir la boîte de dialogue
     } catch (error) {
       console.error(error.message);
+      setError('Erreur lors de l\'envoi des données au backend .NET');
+      setOpen(true); // Ouvrir la boîte de dialogue d'erreur
     }
   };
 
@@ -131,7 +140,7 @@ const FormulaireProfil = () => {
           <Grid container spacing={2}>
             {[
               "Formations",
-              "Durée_Expériencess",
+              "Durée_Expérience",
               "Technologies_Demandées",
               "Description_Mission",
             ].map((field, index) => (
@@ -203,14 +212,18 @@ const FormulaireProfil = () => {
         >
           <DialogTitle sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', pb: 0 }}>
             <Typography variant="h6" sx={{ fontWeight: "bold", color: theme.palette.primary.main }}>
-              Top 3 Collaborateurs Adéquats
+              {error ? "Erreur" : "Liste des collaborateurs adéquats"}
             </Typography>
             <IconButton onClick={handleClose} color="inherit">
               <CloseIcon />
             </IconButton>
           </DialogTitle>
           <DialogContent dividers sx={{ backgroundColor: theme.palette.mode === "light" ? "#ffffff" : "#333333" }}>
-            {topCandidates.length > 0 ? (
+            {error || topCandidates.length === 0 ? (
+              <Typography align="center" variant="h6" color="error">
+                {error || 'Aucun collaborateur trouvé'}
+              </Typography>
+            ) : (
               <List>
                 {topCandidates.map((candidate, index) => (
                   <React.Fragment key={index}>
@@ -222,7 +235,6 @@ const FormulaireProfil = () => {
                       </ListItemAvatar>
                       <ListItemText
                         primary={` ${candidate.displayName}`}
-                      
                         primaryTypographyProps={{
                           variant: "h6",
                           color: theme.palette.text.primary,
@@ -242,17 +254,8 @@ const FormulaireProfil = () => {
                   </React.Fragment>
                 ))}
               </List>
-            ) : (
-              <Typography align="center" variant="h6" color="error">
-                Aucun collaborateur trouvé
-              </Typography>
             )}
           </DialogContent>
-          <DialogActions sx={{ justifyContent: "center", backgroundColor: theme.palette.background.paper }}>
-            <Button onClick={handleClose} variant="contained" color="secondary" sx={{ borderRadius: "20px", px: 3 }}>
-              Fermer
-            </Button>
-          </DialogActions>
         </Dialog>
 
         <Dialog
@@ -293,11 +296,6 @@ const FormulaireProfil = () => {
               </Typography>
             )}
           </DialogContent>
-          <DialogActions sx={{ justifyContent: "center", backgroundColor: theme.palette.background.paper }}>
-            <Button onClick={handleCloseCVDialog} variant="contained" color="secondary" sx={{ borderRadius: "20px", px: 3 }}>
-              Fermer
-            </Button>
-          </DialogActions>
         </Dialog>
       </CardContent>
     </Card>

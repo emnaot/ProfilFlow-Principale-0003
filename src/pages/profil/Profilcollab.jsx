@@ -20,8 +20,17 @@ const SectionTitle = styled(Typography)(({ theme }) => ({
   display: "flex",
   alignItems: "center",
   marginBottom: theme.spacing(2),
-  color: theme.palette.mode === "dark" ? "#bb86fc" : "#0d3d73",
-  fontSize: "1.5rem",
+  color: "#0d3d73", // Bleu foncé
+  fontSize: "1.6rem", // Augmentation légère de la taille de la police
+}));
+
+const EditSectionTitle = styled(Typography)(({ theme }) => ({
+  fontWeight: "bold",
+  display: "flex",
+  alignItems: "center",
+  marginBottom: theme.spacing(2),
+  color: "#0d3d73", // Bleu foncé
+  fontSize: "1.25rem", // Diminution légère de la taille de la police lors de l'édition
 }));
 
 const FieldContainer = styled('div')(({ theme }) => ({
@@ -34,14 +43,21 @@ const FieldContainer = styled('div')(({ theme }) => ({
 
 const FieldTitle = styled(Typography)(({ theme }) => ({
   fontWeight: "bold",
-  color: theme.palette.primary.main,
+  color: "#0d3d73", // Bleu foncé
   marginBottom: theme.spacing(1),
+  fontSize: "1.25rem", // Augmentation légère de la taille de la police
 }));
 
 const FieldValue = styled(Typography)(({ theme }) => ({
   marginBottom: theme.spacing(1),
   lineHeight: 1.6,
   whiteSpace: 'pre-line',
+}));
+
+const ButtonContainer = styled(Grid)(({ theme }) => ({
+  display: 'flex',
+  justifyContent: 'space-between',
+  marginTop: theme.spacing(2),
 }));
 
 const Profil = ({ collaboratorId }) => {
@@ -51,6 +67,7 @@ const Profil = ({ collaboratorId }) => {
   const [loading, setLoading] = useState(false);
   const [openPopup, setOpenPopup] = useState(false);
   const [selectedCV, setSelectedCV] = useState(null);
+  const [photo, setPhoto] = useState(null);
 
   useEffect(() => {
     setLoading(true);
@@ -83,7 +100,7 @@ const Profil = ({ collaboratorId }) => {
       "Informations personnelles": editCV[0]["Informations Personnelles"],
       "Education": editCV[0]["Education"],
       "Compétences": editCV[0]["Compétences"],
-      "Projet académique": editCV[0]["Projet Académique"],
+      "Projet Académique": editCV[0]["Projet Académique"],
       "Experience professionnelle": editCV[0]["Experience Professionnelle"],
       "Langues": editCV[0]["Langues"],
       "Certifications": editCV[0]["Certifications"],
@@ -135,6 +152,16 @@ const Profil = ({ collaboratorId }) => {
     setOpenPopup(false);
   };
 
+  const handlePhotoChange = (e) => {
+    if (e.target.files && e.target.files[0]) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        setPhoto(e.target.result);
+      };
+      reader.readAsDataURL(e.target.files[0]);
+    }
+  };
+
   const renderContent = (key, value) => {
     if (typeof value === 'object' && value !== null) {
       return (
@@ -162,7 +189,7 @@ const Profil = ({ collaboratorId }) => {
         <div style={{ marginLeft: '20px' }}>
           {Object.keys(value).map(subKey => (
             <div key={subKey}>
-              <SectionTitle>{subKey}</SectionTitle>
+              <EditSectionTitle>{subKey}</EditSectionTitle>
               {renderEditContent(subKey, value[subKey], `${path}.${subKey}`)}
             </div>
           ))}
@@ -201,45 +228,70 @@ const Profil = ({ collaboratorId }) => {
       <StyledPaper>
         {editMode ? (
           <>
+            <div style={{ textAlign: 'center', marginBottom: '20px' }}>
+              <EditSectionTitle>Photo du Collaborateur</EditSectionTitle>
+              <input type="file" accept="image/*" onChange={handlePhotoChange} />
+              {photo && (
+                <img 
+                  src={photo} 
+                  alt="Collaborateur" 
+                  style={{ 
+                    marginTop: '20px', 
+                    width: '150px', 
+                    height: '150px', 
+                    borderRadius: '50%',
+                    objectFit: 'cover'
+                  }} 
+                />
+              )}
+            </div>
             {Object.keys(cv).map(key => (
               <div key={key}>
-                <SectionTitle>{key}</SectionTitle>
                 {renderEditContent(key, cv[key], key)}
               </div>
             ))}
-            <Grid container spacing={2} sx={{ mt: 2 }}>
-              <Grid item xs={4}>
+            <ButtonContainer container>
+              <Grid item>
                 <Button variant="contained" color="primary" onClick={handleSave}>
                   Enregistrer
                 </Button>
               </Grid>
-              <Grid item xs={4}>
+              <Grid item>
                 <Button variant="contained" color="secondary" onClick={handleCancel}>
                   Annuler
                 </Button>
               </Grid>
-              <Grid item xs={4}>
-                <Button variant="contained" color="info" onClick={handleGenerateClick}>
-                  Générer
-                </Button>
-              </Grid>
-            </Grid>
+            </ButtonContainer>
           </>
         ) : (
           <>
+            <div style={{ textAlign: 'center', marginBottom: '20px' }}>
+              {photo && (
+                <img 
+                  src={photo} 
+                  alt="Collaborateur" 
+                  style={{ 
+                    width: '150px', 
+                    height: '150px', 
+                    borderRadius: '50%', 
+                    objectFit: 'cover' 
+                  }} 
+                />
+              )}
+            </div>
             {Object.keys(cv).map(key => renderContent(key, cv[key]))}
-            <Grid container spacing={2} sx={{ mt: 4 }}>
-              <Grid item xs={6}>
+            <ButtonContainer container>
+              <Grid item>
                 <Button variant="contained" color="primary" onClick={handleUpdateClick}>
                   Mettre à jour
                 </Button>
               </Grid>
-              <Grid item xs={6}>
-                <Button variant="contained" color="info" onClick={handleGenerateClick}>
-                  Choisir modèle
+              <Grid item>
+                <Button variant="contained" style={{ backgroundColor: '#0d3d73', color: '#fff' }} onClick={handleGenerateClick}>
+                  Générer
                 </Button>
               </Grid>
-            </Grid>
+            </ButtonContainer>
           </>
         )}
       </StyledPaper>

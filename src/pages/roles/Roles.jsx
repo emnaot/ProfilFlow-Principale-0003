@@ -4,7 +4,7 @@ import { DataGrid } from '@mui/x-data-grid';
 import IconButton from '@mui/material/IconButton';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
-import SettingsIcon from '@mui/icons-material/Settings'; // Importation de l'icône de paramétrage
+import SettingsIcon from '@mui/icons-material/Settings';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 
@@ -17,7 +17,7 @@ const DataGridDemo = () => {
       try {
         const response = await fetch("https://localhost:45455/api/Roles");
         const roles = await response.json();
-        setRows(roles); // Adaptation aux données de l'API
+        setRows(roles);
       } catch (error) {
         console.error("Erreur lors de la récupération des rôles:", error);
       }
@@ -57,11 +57,10 @@ const DataGridDemo = () => {
   };
 
   const handleSettingsClick = (id) => {
-    alert("Paramètres pour " + id); // Cette fonction peut être personnalisée
+    alert("Paramètres pour " + id);
   };
 
   const columns = [
-    { field: "id", headerName: "ID", width: 100 },
     { field: "roles", headerName: "Rôle", flex: 1 },
     {
       field: "actions",

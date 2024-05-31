@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useAuth } from "AuthContext";
-import { Container, Typography, Paper, Grid, Button, TextField, CircularProgress, Card, CardContent, CardHeader, Divider, Avatar } from "@mui/material";
+import { Container, Typography, Paper, Grid, Button, TextField, CircularProgress, Card, CardContent, CardHeader, Divider, Dialog, DialogTitle, DialogContent, DialogActions } from "@mui/material";
 import SaveIcon from '@mui/icons-material/Save';
 import CancelIcon from '@mui/icons-material/Cancel';
 import EditIcon from '@mui/icons-material/Edit';
 import { styled } from "@mui/material/styles";
+import PopupModel from '../modele/PopupModel';// Assurez-vous que ce composant existe et est correctement importé
 
 const StyledPaper = styled(Paper)(({ theme }) => ({
   padding: theme.spacing(6),
@@ -24,7 +25,7 @@ const SectionTitle = styled(Typography)(({ theme }) => ({
   alignItems: "center",
   marginBottom: theme.spacing(2),
   color: theme.palette.mode === "dark" ? "#bb86fc" : "#0d3d73",
-  fontSize: "1.5rem",
+  fontSize: "1.25rem", // Diminuer légèrement la taille de la police lors de l'édition
   transition: "color 0.3s ease-in-out",
   "&:hover": {
     color: theme.palette.mode === "dark" ? "#ff79c6" : "#1d7cd6",
@@ -34,6 +35,7 @@ const SectionTitle = styled(Typography)(({ theme }) => ({
 const FieldLabel = styled(Typography)(({ theme }) => ({
   color: theme.palette.mode === "dark" ? "#bb86fc" : "#0d3d73",
   fontWeight: "bold",
+  fontSize: "1.25rem", // Augmenter légèrement la taille de la police
 }));
 
 const FieldValue = styled(Typography)(({ theme }) => ({
@@ -43,12 +45,21 @@ const FieldValue = styled(Typography)(({ theme }) => ({
   borderRadius: theme.shape.borderRadius,
 }));
 
+const ButtonContainer = styled(Grid)(({ theme }) => ({
+  display: "flex",
+  justifyContent: "space-between",
+  marginTop: theme.spacing(2),
+}));
+
 const Profil = () => {
   const { user } = useAuth();
   const [cv, setCv] = useState(null);
   const [editMode, setEditMode] = useState(false);
   const [editCV, setEditCV] = useState({});
   const [loading, setLoading] = useState(false);
+  const [photo, setPhoto] = useState(null);
+  const [openPopup, setOpenPopup] = useState(false);
+  const [selectedCV, setSelectedCV] = useState(null);
 
   useEffect(() => {
     if (!user || !user.mail) return;
@@ -82,8 +93,8 @@ const Profil = () => {
       "Informations personnelles": editCV[0]["Informations Personnelles"],
       "Education": editCV[0]["Education"],
       "Compétences": editCV[0]["Compétences"],
-      "Projet académique": editCV[0]["Projet Académique"],
-      "Experience professionnelle": editCV[0]["Experience Professionnelle"],
+      "Projet Académique": editCV[0]["Projet Académique"],
+      "Experience Professionnelle": editCV[0]["Experience Professionnelle"],
       "Langues": editCV[0]["Langues"],
       "Certifications": editCV[0]["Certifications"],
       "Vie Associative": editCV[0]["Vie Associative"],
@@ -124,16 +135,30 @@ const Profil = () => {
     setEditMode(false);
   };
 
+  const handlePhotoChange = (e) => {
+    if (e.target.files && e.target.files[0]) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        setPhoto(e.target.result);
+      };
+      reader.readAsDataURL(e.target.files[0]);
+    }
+  };
+
+  const handleGenerateClick = () => {
+    setSelectedCV(cv);
+    setOpenPopup(true);
+  };
+
+  const handleClosePopup = () => {
+    setOpenPopup(false);
+  };
+
   const renderContent = (key, value) => {
-    const avatarUrl = ""; // Remplacez par l'URL de votre photo
     if (typeof value === 'object' && value !== null) {
       return (
         <React.Fragment key={key}>
           <Card sx={{ mb: 3, borderRadius: '12px', boxShadow: 3 }}>
-            <CardHeader
-              avatar={<Avatar sx={{ width: 72, height: 72 }} src={avatarUrl}>{key.charAt(0)}</Avatar>}
-              titleTypographyProps={{ variant: 'h6', color: 'primary' }}
-            />
             <CardContent>
               {Object.keys(value).map(subKey => (
                 <div key={subKey} style={{ marginBottom: '10px' }}>
@@ -151,7 +176,6 @@ const Profil = () => {
       <React.Fragment key={key}>
         <Card sx={{ mb: 3, borderRadius: '12px', boxShadow: 3 }}>
           <CardHeader
-            avatar={<Avatar sx={{ width: 72, height: 72 }} src={avatarUrl}>{key.charAt(0)}</Avatar>}
             title={key}
             titleTypographyProps={{ variant: 'h6', color: 'primary' }}
           />
@@ -210,34 +234,84 @@ const Profil = () => {
       <StyledPaper>
         {editMode ? (
           <>
+            <div style={{ textAlign: 'center', marginBottom: '20px' }}>
+              <SectionTitle>Photo du Collaborateur</SectionTitle>
+              <input type="file" accept="image/*" onChange={handlePhotoChange} />
+              {photo && (
+                <img 
+                  src={photo} 
+                  alt="Collaborateur" 
+                  style={{ 
+                    marginTop: '20px', 
+                    width: '150px', 
+                    height: '150px', 
+                    borderRadius: '50%', 
+                    objectFit: 'cover' 
+                  }} 
+                />
+              )}
+            </div>
             {Object.keys(cv).map(key => (
               <div key={key}>
-                <SectionTitle>{key}</SectionTitle>
                 {renderEditContent(key, cv[key], key)}
               </div>
             ))}
-            <Grid container spacing={2} sx={{ mt: 2 }}>
-              <Grid item xs={6}>
+            <ButtonContainer container>
+              <Grid item>
                 <Button variant="contained" color="primary" startIcon={<SaveIcon />} onClick={handleSave}>
                   Enregistrer
                 </Button>
               </Grid>
-              <Grid item xs={6}>
+              <Grid item>
                 <Button variant="contained" color="secondary" startIcon={<CancelIcon />} onClick={handleCancel}>
                   Annuler
                 </Button>
               </Grid>
-            </Grid>
+            </ButtonContainer>
           </>
         ) : (
           <>
+            <div style={{ textAlign: 'center', marginBottom: '20px' }}>
+              {photo && (
+                <img 
+                  src={photo} 
+                  alt="Collaborateur" 
+                  style={{ 
+                    width: '150px', 
+                    height: '150px', 
+                    borderRadius: '50%', 
+                    objectFit: 'cover' 
+                  }} 
+                />
+              )}
+            </div>
             {Object.keys(cv).map(key => renderContent(key, cv[key]))}
-            <Button variant="contained" color="primary" startIcon={<EditIcon />} onClick={handleUpdateClick} sx={{ mt: 4 }}>
-              Mettre à jour
-            </Button>
+            <ButtonContainer container>
+              <Grid item>
+                <Button variant="contained" color="primary" startIcon={<EditIcon />} onClick={handleUpdateClick}>
+                  Mettre à jour
+                </Button>
+              </Grid>
+              <Grid item>
+                <Button variant="contained" style={{ backgroundColor: '#0d3d73', color: '#fff' }} onClick={handleGenerateClick}>
+                  Générer
+                </Button>
+              </Grid>
+            </ButtonContainer>
           </>
         )}
       </StyledPaper>
+      <Dialog open={openPopup} onClose={handleClosePopup} fullScreen>
+        <DialogTitle>Contenu du Modèle</DialogTitle>
+        <DialogContent>
+          <PopupModel selectedCV={selectedCV} /> {/* Passez les données de CV au composant Modele */}
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClosePopup} color="primary">
+            Fermer
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Container>
   );
 };

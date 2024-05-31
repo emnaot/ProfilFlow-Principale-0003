@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import IconButton from "@mui/material/IconButton";
-import EditIcon from "@mui/icons-material/Edit";
+import VisibilityIcon from "@mui/icons-material/Visibility";
 import DeleteIcon from "@mui/icons-material/Delete";
 import InputFileUpload from "./InputFileUpload";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import { Dialog, DialogTitle, DialogContent, CircularProgress } from "@mui/material";
+import CloseIcon from '@mui/icons-material/Close';
 import Profil from "../profil/Profilcollab"; // Assurez-vous que le chemin est correct
 
 export default function DataTable() {
@@ -32,7 +33,6 @@ export default function DataTable() {
         setRows(
           membersData.map((item) => ({
             ...item,
-            id: item.id,
             role: item.role || "Collaborateur", // Rôle par défaut défini ici
           }))
         );
@@ -46,8 +46,6 @@ export default function DataTable() {
   }, []);
 
   const handleRoleChange = async (newRole, id) => {
-    console.log("newRole", newRole);
-    console.log("id-tsest", id);
     const response = await fetch(
       `https://localhost:45455/api/CosmosDB/updateGroupMemberRole/${id}`,
       {
@@ -58,11 +56,9 @@ export default function DataTable() {
     );
 
     if (response.ok) {
-      console.log("test13");
       const updatedRows = rows.map((row) =>
         row.id === id ? { ...row, role: newRole } : row
       );
-      console.log("updatedRows", updatedRows);
       setRows(updatedRows);
     } else {
       const errorText = await response.text();
@@ -96,8 +92,6 @@ export default function DataTable() {
   };
 
   const handleFileUpload = (base64, collaboratorId) => {
-    console.log("Uploaded file in Base64:", base64);
-    console.log("Collaborator ID:", collaboratorId);
     setBase64String(base64);
     sendBase64AndIdToServer(base64, collaboratorId);
   };
@@ -108,7 +102,6 @@ export default function DataTable() {
         method: 'DELETE',
       });
       if (response.ok) {
-        console.log("CV deleted successfully.");
         setRows(rows.map(row => row.id === id ? { ...row, profil: null } : row));
       } else {
         console.error("Failed to delete CV:", response.status);
@@ -118,7 +111,7 @@ export default function DataTable() {
     }
   };
 
-  const handleEditClick = (collaboratorId) => {
+  const handleViewClick = (collaboratorId) => {
     setSelectedCollaborator(collaboratorId);
     setOpen(true);
   };
@@ -129,13 +122,6 @@ export default function DataTable() {
   };
 
   const columns = [
-    {
-      field: "id",
-      headerName: "ID",
-      width: 70,
-      headerAlign: "center",
-      align: "center",
-    },
     {
       field: "displayName",
       headerName: "Nom_Prénom",
@@ -177,18 +163,22 @@ export default function DataTable() {
     },
     {
       field: "CV",
-      headerName: "CV",
+      headerName: (
+        <span style={{ fontWeight: 'bold', fontSize: '1.5rem', color: 'black' }}>
+          CV
+        </span>
+      ),
       width: 150,
       headerAlign: "center",
       align: "center",
       renderCell: (params) => (
         <div>
           <IconButton
-            aria-label="edit"
-            onClick={() => handleEditClick(params.row.id)}
+            aria-label="view"
+            onClick={() => handleViewClick(params.row.id)}
             style={{ color: "Primary" }}
           >
-            <EditIcon />
+            <VisibilityIcon />
           </IconButton>
           <IconButton
             aria-label="delete"
@@ -216,7 +206,21 @@ export default function DataTable() {
         rowsPerPageOptions={[5]}
       />
       <Dialog open={open} onClose={handleClose} maxWidth="md" fullWidth>
-        <DialogTitle>Curriculum Vitæ </DialogTitle>
+        <DialogTitle>
+          Curriculum Vitæ
+          <IconButton
+            aria-label="close"
+            onClick={handleClose}
+            sx={{
+              position: 'absolute',
+              right: 8,
+              top: 8,
+              color: (theme) => theme.palette.grey[500],
+            }}
+          >
+            <CloseIcon />
+          </IconButton>
+        </DialogTitle>
         <DialogContent>
           {selectedCollaborator ? (
             <Profil collaboratorId={selectedCollaborator} />
